@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Resources>
+  <rzut name="Projekt Dom w kotewkach 6 (E) - PODDASZE" id="m3fd297061d375">
+    <poziom nazwa="PODDASZE" pole="51.03" pole2="(103.83)" id="04"/>
+    <pomieszczenia>
+      <pomieszczenie id="1" nazwa="Antresola" pole="14.51" pole2="(29.4)"/>
+      <pomieszczenie id="2" nazwa="Strych ocieplony" pole="14.67" pole2="(31.31)"/>
+      <pomieszczenie id="3" nazwa="Strych ocieplony" pole="18.21" pole2="(39.48)"/>
+      <pomieszczenie id="4" nazwa="Schody" pole="3.64" pole2=""/>
+    </pomieszczenia>
+  </rzut>
+</Resources>

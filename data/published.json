@@ -1,0 +1,106 @@
+{
+  "_comment": "Published reference figures for Archon 'Dom w kotewkach 6 (E)'. Read-only evidence, transcribed from the project card (see data/source/PROVENANCE.md). Do not edit without re-verifying against the source page.",
+  "source_url": "https://www.archon.pl/projekty-domow/projekt-dom-w-kotewkach-6-e-m3fd297061d375",
+  "variant": "E",
+  "retrieved": "2026-08-30",
+
+  "global": {
+    "usable_area_m2": 163.57,
+    "net_area_m2": 127.02,
+    "attic_area_m2": 32.88,
+    "boiler_room_m2": 7.31,
+    "footprint_m2": 154.42,
+    "floor_area_m2": 222.64,
+    "total_area_m2": 307.07,
+    "cubature_m3": 849.27,
+    "building_height_m": 7.09,
+    "roof_pitch_deg": 35.0,
+    "roof_area_m2": 216.8,
+    "min_plot_m": [25.1, 17.0]
+  },
+
+  "levels": {
+    "ground": { "usable_area_m2": 116.18, "floor_area_m2": 118.81 },
+    "attic": { "usable_area_m2": 51.03, "floor_area_m2": 103.83 }
+  },
+
+  "rooms": {
+    "ground": [
+      { "id": 1, "name": "Wiatrołap", "area_m2": 5.35 },
+      { "id": 2, "name": "Hol", "area_m2": 1.81 },
+      { "id": 3, "name": "Pokój", "area_m2": 11.99 },
+      { "id": 4, "name": "Łazienka", "area_m2": 3.48 },
+      { "id": 5, "name": "Pokój", "area_m2": 11.99 },
+      { "id": 6, "name": "Salon + Jadalnia", "area_m2": 30.57, "floor_area_m2": 33.2 },
+      { "id": 7, "name": "Hol", "area_m2": 2.3 },
+      { "id": 8, "name": "Pokój", "area_m2": 13.05 },
+      { "id": 9, "name": "Garderoba", "area_m2": 3.96 },
+      { "id": 10, "name": "Pralnia", "area_m2": 4.94 },
+      { "id": 11, "name": "Kotłownia", "area_m2": 7.31 },
+      { "id": 12, "name": "Łazienka", "area_m2": 5.85 },
+      { "id": 13, "name": "Spiżarnia", "area_m2": 1.54 },
+      { "id": 14, "name": "Kuchnia", "area_m2": 12.04 }
+    ],
+    "attic": [
+      { "id": 1, "name": "Antresola", "area_m2": 14.51, "floor_area_m2": 29.4 },
+      { "id": 2, "name": "Strych ocieplony", "area_m2": 14.67, "floor_area_m2": 31.31 },
+      { "id": 3, "name": "Strych ocieplony", "area_m2": 18.21, "floor_area_m2": 39.48 },
+      { "id": 4, "name": "Schody", "area_m2": 3.64 }
+    ]
+  },
+
+  "overall_dimensions_cm": {
+    "_comment": "Read off the printed overall dimension chains on plan_ground.png. Centimetres, as printed. Not a published-table figure; recorded here because it is unambiguous and load-bearing for T06.",
+    "ground_width": 1710,
+    "ground_depth": 900
+  },
+
+  "construction": {
+    "exterior_wall_layers": [
+      { "material": "Porotherm (pustak ceramiczny)", "thickness_mm": 250 },
+      { "material": "EPS Termo Organika (styropian)", "thickness_mm": 200 },
+      { "material": "tynk", "thickness_mm": null }
+    ],
+    "ceiling": "płyta żelbetowa",
+    "knee_wall_mm": 290,
+    "roof": "dwuspadowy, nachylenie 35 st., więźba drewniana, blacha dachówkowa/dachówka ceramiczna",
+    "ventilation": "mechaniczna z odzyskiem ciepła (rekuperacja)"
+  },
+
+  "section_levels_m": {
+    "_comment": "Read off section.png (przekrój). Independent confirmation: 6.77 - (-0.32) = 7.09 m = published building height.",
+    "terrain": -0.32,
+    "ground_floor": 0.0,
+    "attic_floor": 3.04,
+    "eave_wall_top": 2.88,
+    "ridge": 6.77,
+    "ground_clear_height": 2.7,
+    "attic_clear_height": 2.73
+  },
+
+  "measurement_norm": null,
+
+  "measurement_norm_evidence": {
+    "_comment": "T15 owns the measurement_norm field; left null per T03 brief. But the source page DOES state the norm explicitly — recorded here as evidence so T15 can resolve immediately.",
+    "stated_norm": "PN-ISO 9836",
+    "stated_for": [
+      "powierzchnia użytkowa (bez schodów)",
+      "powierzchnia zabudowy",
+      "powierzchnia całkowita",
+      "kubatura"
+    ],
+    "usable_area_definition_pl": "Powierzchnia użytkowa wg obowiązującej normy PN-ISO 9836, to powierzchnia wszystkich pomieszczeń budynku liczona w świetle ścian.",
+    "sloped_ceiling_rule": {
+      "above_m": 2.2,
+      "above_factor": 1.0,
+      "between_m": [1.4, 2.2],
+      "between_factor": 0.5,
+      "below_m": 1.4,
+      "below_factor": 0.0
+    },
+    "footprint_definition_pl": "Powierzchnia terenu, zajęta przez budynek w stanie wykończonym, bez tarasów, schodów zewnętrznych i podjazdów (PN-ISO 9836)",
+    "cubature_definition_pl": "Objętość budynku, liczona zgodnie z normą PN-ISO-9836, czyli wraz z przegrodami zewnętrznymi i wewnętrznymi (ścianami, stropem, dachem i podmurówką).",
+    "building_height_definition_pl": "Wysokość mierzona od poziomu terenu przy wejściu do budynku do kalenicy",
+    "floor_area_definition_pl": "W odróżnieniu od powierzchni netto i użytkowej liczona jest bez uwzględnienia wysokości pomieszczeń i pokazuje rzeczywistą wielkość podłogi w pomieszczeniach. Powierzchnia ta widnieje przy opisach rzutów w nawiasach."
+  }
+}

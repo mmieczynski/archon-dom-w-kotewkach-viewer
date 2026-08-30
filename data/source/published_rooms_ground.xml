@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Resources>
+  <rzut name="Projekt Dom w kotewkach 6 (E) - PARTER" id="m3fd297061d375">
+    <poziom nazwa="PARTER" pole="116.18" pole2="(118.81)" id="02"/>
+    <pomieszczenia>
+      <pomieszczenie id="1" nazwa="Wiatrołap" pole="5.35" pole2=""/>
+      <pomieszczenie id="2" nazwa="Hol" pole="1.81" pole2=""/>
+      <pomieszczenie id="3" nazwa="Pokój" pole="11.99" pole2=""/>
+      <pomieszczenie id="4" nazwa="Łazienka" pole="3.48" pole2=""/>
+      <pomieszczenie id="5" nazwa="Pokój" pole="11.99" pole2=""/>
+      <pomieszczenie id="6" nazwa="Salon + Jadalnia" pole="30.57" pole2="(33.2)"/>
+      <pomieszczenie id="7" nazwa="Hol" pole="2.3" pole2=""/>
+      <pomieszczenie id="8" nazwa="Pokój" pole="13.05" pole2=""/>
+      <pomieszczenie id="9" nazwa="Garderoba" pole="3.96" pole2=""/>
+      <pomieszczenie id="10" nazwa="Pralnia" pole="4.94" pole2=""/>
+      <pomieszczenie id="11" nazwa="Kotłownia" pole="7.31" pole2=""/>
+      <pomieszczenie id="12" nazwa="Łazienka" pole="5.85" pole2=""/>
+      <pomieszczenie id="13" nazwa="Spiżarnia" pole="1.54" pole2=""/>
+      <pomieszczenie id="14" nazwa="Kuchnia" pole="12.04" pole2=""/>
+    </pomieszczenia>
+  </rzut>
+</Resources>

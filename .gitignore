@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# uv
+uv.lock.bak
+
+# OS
+.DS_Store
+
+# Build artifacts - generated, never hand-edited (see README.md).
+# tests/golden/ is NOT under build/, so it is committed on purpose
+# (T13 golden overlay images) and is unaffected by this rule.
+build/*
+!build/.gitkeep
