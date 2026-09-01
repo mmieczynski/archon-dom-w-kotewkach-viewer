@@ -5,6 +5,25 @@ Browser-viewable 3D model of the Archon house project
 reconstructed from the published top-down floor plans and verified programmatically
 against the project's published dimensional data.
 
+**Live viewer:** https://mmieczynski.github.io/archon-dom-w-kotewkach-viewer/
+
+> ### Attribution and copyright
+>
+> **Dom w Kotewkach 6 (E) is a commercial house design by [Archon+](https://www.archon.pl/),
+> and the design, the floor plans, the section and the marketing renders are their
+> copyright, not mine.** Everything under `data/source/` was retrieved from the public
+> project listing (see `data/source/PROVENANCE.md`) and is reproduced here as the source
+> evidence the reconstruction is checked against.
+>
+> This is an **unofficial, independent** reconstruction, not affiliated with or endorsed by
+> Archon+. It reconstructs the *published marketing drawings*, not the construction
+> documentation: there is no structure, no MEP, and no as-built information. **It is not a
+> substitute for buying the project and it must not be used to build from.** If you want to
+> build this house, buy the design from Archon+.
+>
+> The code, the spec and the test suite are mine. If Archon+ would prefer their material not
+> be hosted here, open an issue and I will remove it.
+
 ## Core principle
 
 **The model is generated, never hand-authored.**

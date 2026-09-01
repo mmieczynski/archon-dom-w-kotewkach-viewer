@@ -1,0 +1,396 @@
+{
+  "schema": "kotewki/quantities/1",
+  "units": {
+    "length": "m",
+    "area": "m2",
+    "volume": "m3",
+    "angle": "deg"
+  },
+  "source": {
+    "spec": "spec/*.json",
+    "generator": "kotewki.generator",
+    "exporter": "kotewki.export"
+  },
+  "artifact": {
+    "path": "build/model.glb",
+    "bytes": 111860,
+    "sha256": "0b45f5c3b23d1fe2bccbdfa23738a42f666787ea349e3583c6c704afa4c9812a",
+    "nodes": 106,
+    "vertices": 1400,
+    "faces": 2428
+  },
+  "elevations_m": {
+    "terrain": -0.32,
+    "ground_floor": 0.0,
+    "attic_floor": 3.04,
+    "knee_wall_top": 3.33,
+    "roof_springing": 3.61,
+    "ridge": 6.760934,
+    "eave_fascia_underside": 2.879875
+  },
+  "heights": {
+    "building_m": {
+      "computed": 7.080934,
+      "published": 7.09,
+      "residual_pct": -0.127871
+    },
+    "ridge_above_ground_m": {
+      "computed": 6.760934,
+      "published": 6.77,
+      "residual_pct": -0.133915
+    },
+    "eave_above_ground_m": {
+      "computed": 2.879875,
+      "published": 2.88,
+      "residual_pct": -0.004324
+    }
+  },
+  "roof": {
+    "pitch_deg": 35.0,
+    "ridge_axis": "x",
+    "span_m": 9.0,
+    "eaves_overhang_m": 0.6,
+    "verge_overhang_m": 0.59,
+    "roof_buildup_vertical_m": 0.28,
+    "fascia_depth_m": 0.31,
+    "area_m2": {
+      "computed": 227.620747,
+      "published": 216.8,
+      "residual_pct": 4.991119
+    }
+  },
+  "areas_m2": {
+    "footprint": {
+      "computed": 154.4224,
+      "published": 154.42,
+      "residual_pct": 0.001554
+    },
+    "footprint_structural": 153.9,
+    "usable": {
+      "computed": 163.100579,
+      "published": 163.57,
+      "residual_pct": -0.286985
+    },
+    "net": {
+      "computed": 126.646136,
+      "published": 127.02,
+      "residual_pct": -0.294335
+    },
+    "floor": {
+      "computed": 222.09605,
+      "published": 222.64,
+      "residual_pct": -0.244318
+    },
+    "attic": {
+      "computed": 32.929093,
+      "published": 32.88,
+      "residual_pct": 0.14931
+    },
+    "boiler": {
+      "computed": 7.18285,
+      "published": 7.31,
+      "residual_pct": -1.739398
+    },
+    "usable_floor_basis": 165.730579,
+    "net_floor_basis": 129.276136,
+    "deductions": {
+      "ground_stair_run": 2.63,
+      "applies_to": [
+        "usable",
+        "net"
+      ],
+      "source": "data/published.json, read two ways: levels.ground floor 118.81 - usable 116.18, and the Salon row floor 33.20 - usable 30.57. The readings must agree or the export fails."
+    },
+    "by_level": {
+      "ground": {
+        "envelope": 152.108,
+        "rooms": 14,
+        "faces": 11,
+        "floor_area": {
+          "computed": 118.36995,
+          "published": 118.81,
+          "residual_pct": -0.370381
+        },
+        "counted_area": {
+          "computed": 115.73995,
+          "published": 116.18,
+          "residual_pct": -0.378766
+        },
+        "stair_run_deducted": 2.63
+      },
+      "attic": {
+        "envelope": 153.9,
+        "rooms": 4,
+        "faces": 4,
+        "floor_area": {
+          "computed": 103.7261,
+          "published": 103.83,
+          "residual_pct": -0.100067
+        },
+        "counted_area": {
+          "computed": 51.018129,
+          "published": 51.03,
+          "residual_pct": -0.023263
+        },
+        "stair_run_deducted": 0.0
+      }
+    }
+  },
+  "volumes_m3": {
+    "cubature": {
+      "computed": 849.626783,
+      "published": 849.27,
+      "residual_pct": 0.042011
+    },
+    "solid_volume_sum": 267.108171
+  },
+  "mesh": {
+    "nodes": 106,
+    "vertices": 1400,
+    "faces": 2428,
+    "solid_volume_sum_m3": 267.108171,
+    "bbox_min_m": [
+      -0.59,
+      -0.6,
+      -0.32
+    ],
+    "bbox_max_m": [
+      17.690001,
+      9.6,
+      7.360934
+    ],
+    "bbox_extents_m": [
+      18.280001,
+      10.2,
+      7.680934
+    ]
+  },
+  "rooms": [
+    {
+      "ids": [
+        "G_R1"
+      ],
+      "names": [
+        "Wiatrołap"
+      ],
+      "level": "ground",
+      "shared_face": false,
+      "floor_area_m2": 5.4014,
+      "counted_area_m2": 5.4014,
+      "published_area_m2": 5.35,
+      "residual_pct": 0.960748
+    },
+    {
+      "ids": [
+        "G_R2",
+        "G_R6",
+        "G_R7",
+        "G_R14"
+      ],
+      "names": [
+        "Hol",
+        "Salon + Jadalnia",
+        "Hol",
+        "Kuchnia"
+      ],
+      "level": "ground",
+      "shared_face": true,
+      "floor_area_m2": 48.9369,
+      "counted_area_m2": 48.9369,
+      "published_area_m2": 46.72,
+      "residual_pct": 4.745077
+    },
+    {
+      "ids": [
+        "G_R3"
+      ],
+      "names": [
+        "Pokój"
+      ],
+      "level": "ground",
+      "shared_face": false,
+      "floor_area_m2": 11.9944,
+      "counted_area_m2": 11.9944,
+      "published_area_m2": 11.99,
+      "residual_pct": 0.036697
+    },
+    {
+      "ids": [
+        "G_R4"
+      ],
+      "names": [
+        "Łazienka"
+      ],
+      "level": "ground",
+      "shared_face": false,
+      "floor_area_m2": 3.4816,
+      "counted_area_m2": 3.4816,
+      "published_area_m2": 3.48,
+      "residual_pct": 0.045977
+    },
+    {
+      "ids": [
+        "G_R5"
+      ],
+      "names": [
+        "Pokój"
+      ],
+      "level": "ground",
+      "shared_face": false,
+      "floor_area_m2": 11.9944,
+      "counted_area_m2": 11.9944,
+      "published_area_m2": 11.99,
+      "residual_pct": 0.036697
+    },
+    {
+      "ids": [
+        "G_R8"
+      ],
+      "names": [
+        "Pokój"
+      ],
+      "level": "ground",
+      "shared_face": false,
+      "floor_area_m2": 13.064,
+      "counted_area_m2": 13.064,
+      "published_area_m2": 13.05,
+      "residual_pct": 0.10728
+    },
+    {
+      "ids": [
+        "G_R9"
+      ],
+      "names": [
+        "Garderoba"
+      ],
+      "level": "ground",
+      "shared_face": false,
+      "floor_area_m2": 3.9579,
+      "counted_area_m2": 3.9579,
+      "published_area_m2": 3.96,
+      "residual_pct": -0.05303
+    },
+    {
+      "ids": [
+        "G_R10"
+      ],
+      "names": [
+        "Pralnia"
+      ],
+      "level": "ground",
+      "shared_face": false,
+      "floor_area_m2": 4.9559,
+      "counted_area_m2": 4.9559,
+      "published_area_m2": 4.94,
+      "residual_pct": 0.321862
+    },
+    {
+      "ids": [
+        "G_R11"
+      ],
+      "names": [
+        "Kotłownia"
+      ],
+      "level": "ground",
+      "shared_face": false,
+      "floor_area_m2": 7.18285,
+      "counted_area_m2": 7.18285,
+      "published_area_m2": 7.31,
+      "residual_pct": -1.739398
+    },
+    {
+      "ids": [
+        "G_R12"
+      ],
+      "names": [
+        "Łazienka"
+      ],
+      "level": "ground",
+      "shared_face": false,
+      "floor_area_m2": 5.8607,
+      "counted_area_m2": 5.8607,
+      "published_area_m2": 5.85,
+      "residual_pct": 0.182906
+    },
+    {
+      "ids": [
+        "G_R13"
+      ],
+      "names": [
+        "Spiżarnia"
+      ],
+      "level": "ground",
+      "shared_face": false,
+      "floor_area_m2": 1.5399,
+      "counted_area_m2": 1.5399,
+      "published_area_m2": 1.54,
+      "residual_pct": -0.006494
+    },
+    {
+      "ids": [
+        "A_R1"
+      ],
+      "names": [
+        "Antresola"
+      ],
+      "level": "attic",
+      "shared_face": false,
+      "floor_area_m2": 29.3016,
+      "counted_area_m2": 14.431536,
+      "published_area_m2": 14.51,
+      "residual_pct": -0.54076
+    },
+    {
+      "ids": [
+        "A_R2"
+      ],
+      "names": [
+        "Strych ocieplony"
+      ],
+      "level": "attic",
+      "shared_face": false,
+      "floor_area_m2": 31.3534,
+      "counted_area_m2": 14.731403,
+      "published_area_m2": 14.67,
+      "residual_pct": 0.418561
+    },
+    {
+      "ids": [
+        "A_R3"
+      ],
+      "names": [
+        "Strych ocieplony"
+      ],
+      "level": "attic",
+      "shared_face": false,
+      "floor_area_m2": 39.4136,
+      "counted_area_m2": 18.19769,
+      "published_area_m2": 18.21,
+      "residual_pct": -0.067598
+    },
+    {
+      "ids": [
+        "A_R4"
+      ],
+      "names": [
+        "Schody"
+      ],
+      "level": "attic",
+      "shared_face": false,
+      "floor_area_m2": 3.6575,
+      "counted_area_m2": 3.6575,
+      "published_area_m2": 3.64,
+      "residual_pct": 0.480769
+    }
+  ],
+  "notes": [
+    "Areas are measured to the FINISHED face (PN-ISO 9836, w swietle scian), which is the convention Archon publishes. The dimension chains are printed to raw structure; the 20 mm/face finish allowance is solved-for, not published.",
+    "The four open-plan ground-floor rooms (Hol, Salon, Hol, Kuchnia) share one polygonised face and are reported as one row. The publisher's splits between them are virtual measuring lines, not walls.",
+    "That face reads +2.217 m2 against the sum of its four published USABLE figures, because it contains the ground-floor stair run which the publisher excludes from usable area and which no spec entity models. Against the four published FLOOR figures (49.35 m2) the same face reads -0.84 %, which is what identifies it as a floor area.",
+    "areas_m2.usable and areas_m2.net are therefore the face sums LESS the 2.63 m2 ground stair run (areas_m2.deductions), once each and on the ground floor only. Undeducted they read 165.7306 and 129.2761, i.e. +1.27 % and +1.52 %, and the usable figure would fail the +-1 % invariant. This deduction consumes 2.63 m2 of published information: the usable check independently constrains 160.94 m2 of 163.57. areas_m2.by_level[*].floor_area consumes none and is the honest check.",
+    "The attic's Schody 3.64 m2 is a DIFFERENT quantity from the ground stair run: different storey, and it is added back into net area rather than deducted.",
+    "solid_volume_sum is NOT a material volume. The exported solids interpenetrate by design (wall junction extensions, ground walls through the attic slab band, each chimney traced once per storey plan); the sum double-counts by ~8 %. Cubature is computed from the envelope, never by summing mesh volumes.",
+    "The scene bounding box is NOT the building: in plan it includes the 600 mm eaves and 590 mm verge overhangs, and vertically it runs from the plinth underside at the terrain to the chimney tops 600 mm above the ridge."
+  ],
+  "open_plan_face_residual_m2": 2.2169
+}

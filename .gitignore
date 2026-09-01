@@ -18,3 +18,14 @@ uv.lock.bak
 # (T13 golden overlay images) and is unaffected by this rule.
 build/*
 !build/.gitkeep
+
+# Artifacts the GitHub Pages site serves. Still generated, still never hand-edited --
+# `just build && just report` reproduces them byte-identically -- but Pages has no build
+# step, so the viewer needs them committed. Regenerate and commit after any spec change.
+!build/model.glb
+!build/quantities.json
+!build/overlay_ground.png
+!build/overlay_attic.png
+!build/overlay_ground_mirrored.png
+!build/overlay_attic_mirrored.png
+!build/REPORT.md
