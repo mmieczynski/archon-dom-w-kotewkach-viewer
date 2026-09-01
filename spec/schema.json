@@ -1,0 +1,1157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/maciej/dom-w-kotewkach-3d/spec/schema.json",
+  "title": "Dom w Kotewkach 6 (E) — merged building spec",
+  "description": "Contract for the MERGED spec document produced by kotewki.spec.load_spec(), which concatenates spec/meta.json (T02) + spec/ground.json (T04) + spec/attic.json (T05). No single file on disk validates against this schema on its own; only the merge does.\n\nUNITS — THE ONE RULE THAT MATTERS.\n  * Any field with NO unit suffix that holds a length is INTEGER MILLIMETRES.\n  * Any field suffixed `_cm` holds CENTIMETRES, transcribed verbatim as printed on the\n    plans. These exist ONLY inside dimension_chains. The loader multiplies by 10; that x10\n    lives in exactly one place in the codebase (kotewki.spec.CM_TO_MM) and nowhere else.\n  * Any field suffixed `_m2` is a float area in SQUARE METRES, as printed by the publisher.\n  * `pitch_deg` is a float in DEGREES.\n  * There are no metre-valued fields. Metres appear only at the shapely boundary (T07) and\n    at glTF export (T12).\nFloats are rejected for every length: `\"type\": \"integer\"` here, plus an exact float sweep\nin the loader (JSON Schema treats 250.0 as an integer; the loader does not).\nEvery object sets `additionalProperties: false`, so an invented field with an ambiguous\nunit (`width_m`, `thickness_cm`) is a hard error rather than a silently ignored key.\n\nCOORDINATES. One single Cartesian frame shared by BOTH levels: origin at the building's\nouter south-west corner, +x east, +y north, integer millimetres. Ground and attic must NOT\nuse level-local origins — the 3D generator stacks them without any per-level transform, so\ndifferent origins would silently misalign the storeys.\n\nPROVENANCE. `derived`/`derived_fields` mark values that were inferred rather than read off\na printed number; `disputed`/`disputed_fields`/`dispute_ref` mark values whose published\nsource contradicts other published sources. Both force a `note`. See $defs/provenance_rules.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "meta",
+    "levels",
+    "construction",
+    "section_elevations",
+    "roof",
+    "walls",
+    "openings",
+    "rooms",
+    "dimension_chains"
+  ],
+  "properties": {
+    "_comment": {
+      "$ref": "#/$defs/comment"
+    },
+    "meta": {
+      "description": "Provenance of the transcription itself. Lives in spec/meta.json.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "source_url",
+        "variant",
+        "transcribed_by",
+        "date"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "schema_version": {
+          "description": "Version of THIS schema the spec was written against. Bump on any breaking change.",
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "project": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        },
+        "variant": {
+          "description": "Archon variant suffix. (E) denotes a specific mirrored/modified variant; getting this wrong produces a perfect model of the wrong house. See PROVENANCE.md.",
+          "type": "string",
+          "minLength": 1
+        },
+        "transcribed_by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "date": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "note": {
+          "$ref": "#/$defs/note"
+        }
+      }
+    },
+    "levels": {
+      "description": "Storeys. Lives in spec/meta.json (T02). Level ids are the enum ground|attic and are referenced by walls, rooms and dimension_chains.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2,
+      "items": {
+        "$ref": "#/$defs/level"
+      }
+    },
+    "construction": {
+      "description": "Build-up of the envelope, from the publisher's spec sheet. Lives in spec/meta.json (T02).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exterior_wall",
+        "ceiling",
+        "knee_wall_height",
+        "finish_allowance"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "exterior_wall": {
+          "$ref": "#/$defs/build_up"
+        },
+        "ceiling": {
+          "$ref": "#/$defs/build_up"
+        },
+        "knee_wall_height": {
+          "description": "Ścianka kolankowa, millimetres. Printed on the spec sheet (29 cm). Height of masonry above the attic floor before the roof plane springs; an input to the roof, see roof.springing.",
+          "$ref": "#/$defs/extent_mm"
+        },
+        "finish_allowance": {
+          "description": "Millimetres of finish per face, subtracted from raw-structure dimensions to reach the published *w świetle ścian* room areas (PN-ISO 9836). NOT a wall layer and NOT baked into dimension_chains — it is the geometry kernel's `measure_to` parameter (T07). T15 confirms it across all 14 ground-floor rooms.",
+          "$ref": "#/$defs/offset_mm"
+        },
+        "roof_covering": {
+          "type": "string",
+          "minLength": 1
+        },
+        "roof_structure": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ventilation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "$ref": "#/$defs/note"
+        },
+        "source_image": {
+          "$ref": "#/$defs/source_image"
+        },
+        "derived": {
+          "$ref": "#/$defs/derived"
+        },
+        "derived_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "disputed": {
+          "$ref": "#/$defs/disputed"
+        },
+        "disputed_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "dispute_ref": {
+          "$ref": "#/$defs/dispute_ref"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_rules"
+        }
+      ]
+    },
+    "section_elevations": {
+      "description": "Level marks transcribed from data/source/section.png, in millimetres relative to the ±0.00 ground-floor datum. Lives in spec/meta.json (T02).\n\nTHESE ARE ASSERTION TARGETS, NOT GENERATOR INPUTS. In particular `ridge` must never be fed into the roof construction — T09/T11 require the ridge to fall out of (eaves line, pitch_deg, springing elevation) and only THEN be compared against this number. Forcing the ridge to match turns the project's only roof check into a tautology.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "terrain",
+        "ground_floor",
+        "eave_fascia_underside",
+        "attic_floor",
+        "ridge",
+        "source_image"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "terrain": {
+          "description": "Finished ground level at the entrance. Negative: the floor sits above the terrain. Building height is measured ridge − terrain.",
+          "$ref": "#/$defs/length_mm"
+        },
+        "ground_floor": {
+          "description": "The ±0.00 datum. Must be 0 by definition of the frame.",
+          "type": "integer",
+          "const": 0
+        },
+        "attic_floor": {
+          "$ref": "#/$defs/length_mm"
+        },
+        "ridge": {
+          "description": "Ridge as printed on the section (+6.77 m). ASSERTION TARGET ONLY — see this object's description.",
+          "$ref": "#/$defs/length_mm"
+        },
+        "source_image": {
+          "$ref": "#/$defs/source_image"
+        },
+        "note": {
+          "$ref": "#/$defs/note"
+        },
+        "derived": {
+          "$ref": "#/$defs/derived"
+        },
+        "derived_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "disputed": {
+          "$ref": "#/$defs/disputed"
+        },
+        "disputed_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "dispute_ref": {
+          "$ref": "#/$defs/dispute_ref"
+        },
+        "eave_fascia_underside": {
+          "description": "The +2.88 m mark printed on the section. T17 established this is the EAVE FASCIA UNDERSIDE at the outer edge of the 600 mm overhang - NOT the wall-plate top, and not in the wall chain at all. That mislabelling is why 3040 - 2880 = 160 never reconciled with the 340 mm ceiling slab. ASSERTION TARGET.",
+          "$ref": "#/$defs/length_mm"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_rules"
+        }
+      ]
+    },
+    "roof": {
+      "description": "Roof INPUTS. Lives in spec/meta.json (T02); resolved by T17, see docs/roof-resolution.md. The ridge height is deliberately absent: it is an OUTPUT of the generator, not an input.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "pitch_deg",
+        "eaves_overhang"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "gable",
+            "hip",
+            "half_hip",
+            "mansard",
+            "shed"
+          ],
+          "description": "Archon publishes 'dach dwuspadowy' = symmetric gable."
+        },
+        "pitch_deg": {
+          "description": "Roof pitch in degrees. The ONE angular float in the spec. Published as 35 deg and CONFIRMED by T17 four independent ways (section line fit 35.003 deg at 0.06 px RMS; attic 140/220 contours 35.13 +/- 0.6 deg; banded attic areas 34.3-34.5 deg; gable-render branches 34.92-34.99 deg). No longer disputed. See docs/roof-resolution.md.",
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 90
+        },
+        "eaves_overhang": {
+          "description": "Horizontal overhang of the roof beyond the outer face of the exterior wall, millimetres, on plan. Not published; MEASURED by T17 at 636/632 mm on the section and 611 mm on the attic plan -> 600 mm. Always `derived`. NB this does NOT reproduce the published 216.8 m2 roof area, which implies ~440 mm; see T09 and docs/roof-resolution.md.",
+          "$ref": "#/$defs/offset_mm"
+        },
+        "ridge_axis": {
+          "description": "Axis the ridge line runs along in the shared coordinate frame. 'x' means the ridge runs east-west, i.e. the roof planes fall towards ±y.",
+          "type": "string",
+          "enum": [
+            "x",
+            "y"
+          ]
+        },
+        "springing": {
+          "description": "Elevation reference the roof planes spring from. T17 established 'knee_wall_top' = attic_floor 3040 + knee wall 290 = 3330 mm (measured independently at 3342). Derived.",
+          "type": "string",
+          "enum": [
+            "wall_plate",
+            "attic_floor",
+            "knee_wall_top"
+          ]
+        },
+        "note": {
+          "$ref": "#/$defs/note"
+        },
+        "source_image": {
+          "$ref": "#/$defs/source_image"
+        },
+        "derived": {
+          "$ref": "#/$defs/derived"
+        },
+        "derived_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "disputed": {
+          "$ref": "#/$defs/disputed"
+        },
+        "disputed_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "dispute_ref": {
+          "$ref": "#/$defs/dispute_ref"
+        },
+        "verge_overhang": {
+          "description": "Horizontal overhang at the gable ends (verge), millimetres, on plan. Measured by T17 at 590 mm from the attic plan. Always `derived`.",
+          "$ref": "#/$defs/offset_mm"
+        },
+        "roof_buildup_vertical": {
+          "description": "VERTICAL offset from the top of the knee wall to the roof's outer plane at the wall face, millimetres. This is the springing elevation input: springing = attic_floor + knee_wall + roof_buildup_vertical. T17 measured 280 mm (range 0.28-0.30, +/-30 mm). Always `derived` - it is the ONLY derived input in the ridge chain, which is what keeps T09's ridge and building-height assertions honest.",
+          "$ref": "#/$defs/offset_mm"
+        },
+        "fascia_depth": {
+          "description": "VERTICAL depth from the roof's outer plane down to the fascia underside at the outer edge of the overhang, millimetres. T17 measured 310 mm. DISTINCT from roof_buildup_vertical (280 mm at the wall face) - conflating the two is exactly the error that produced the original phantom roof discrepancy. Used only for the eave-line check: eave = springing - eaves_overhang*tan(pitch) - fascia_depth = 2880. Always `derived`.",
+          "$ref": "#/$defs/offset_mm"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_rules"
+        }
+      ]
+    },
+    "walls": {
+      "description": "Wall centrelines. Ground-floor walls live in spec/ground.json (T04), attic walls in spec/attic.json (T05).",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/wall"
+      }
+    },
+    "openings": {
+      "description": "Windows, doors and cased passages. Each hosted by exactly one wall; the loader asserts the wall id resolves.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/opening"
+      }
+    },
+    "rooms": {
+      "description": "One entry per room in the publisher's area table — all 14 on the ground floor and all 4 in the attic. Every room carries its published area, so every room is checkable.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/room"
+      }
+    },
+    "dimension_chains": {
+      "description": "Printed dimension chains, transcribed verbatim in CENTIMETRES. The primary transcription-error detector (T06).",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/dimension_chain"
+      }
+    },
+    "slab_openings": {
+      "description": "Regions where the floor slab is absent. See $defs/slab_opening.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/slab_opening"
+      }
+    },
+    "roof_openings": {
+      "description": "Openings in roof planes. See $defs/roof_opening.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/roof_opening"
+      }
+    }
+  },
+  "$defs": {
+    "comment": {
+      "description": "Free-form editorial comment. Ignored by all code. Present so hand-edited spec files can carry ownership banners without tripping additionalProperties.",
+      "type": "string"
+    },
+    "note": {
+      "description": "Human-readable justification. REQUIRED whenever anything on this object is marked derived or disputed — a derived value with no stated basis is indistinguishable from a guess.",
+      "type": "string",
+      "minLength": 1
+    },
+    "source_image": {
+      "description": "Repo-relative path to the read-only source artifact this was transcribed from, e.g. 'data/source/plan_ground.png'. Makes every number traceable for T15 dispute resolution.",
+      "type": "string",
+      "pattern": "^data/source/[A-Za-z0-9_./-]+$"
+    },
+    "derived": {
+      "description": "true = NO value on this object was transcribed from a number printed on a source document; it was inferred, computed or assumed. false/absent = every value here was read off a printed number. Use `derived_fields` instead when only some fields are inferred. Setting this to true REQUIRES `note`.",
+      "type": "boolean"
+    },
+    "disputed": {
+      "description": "true = the values on this object are transcribed correctly but contradict other published figures, and the contradiction is unresolved. Distinct from `derived`: a value can be faithfully transcribed AND disputed (roof.pitch_deg is exactly that). Setting this to true REQUIRES `note` and `dispute_ref`.",
+      "type": "boolean"
+    },
+    "dispute_ref": {
+      "description": "Task id owning the resolution of the dispute, e.g. 'T17'.",
+      "type": "string",
+      "minLength": 1
+    },
+    "field_list": {
+      "description": "Names of sibling properties this flag applies to. The loader asserts every name is a property that actually exists on this object, so a typo here is an error rather than a silently-ignored annotation.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "provenance_rules": {
+      "description": "Forces a justification onto every derived or disputed value. Applied via allOf on every annotatable object.",
+      "type": "object",
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "derived"
+            ],
+            "properties": {
+              "derived": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "note"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "derived_fields"
+            ]
+          },
+          "then": {
+            "required": [
+              "note"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "disputed"
+            ],
+            "properties": {
+              "disputed": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "note",
+              "dispute_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "disputed_fields"
+            ]
+          },
+          "then": {
+            "required": [
+              "note",
+              "dispute_ref"
+            ]
+          }
+        }
+      ]
+    },
+    "length_mm": {
+      "description": "A signed length in INTEGER MILLIMETRES. Use for coordinates and elevations, which may be negative.",
+      "type": "integer"
+    },
+    "extent_mm": {
+      "description": "A strictly positive length in INTEGER MILLIMETRES. Use for thicknesses, widths and heights — a zero or negative extent is always an error.",
+      "type": "integer",
+      "exclusiveMinimum": 0
+    },
+    "offset_mm": {
+      "description": "A non-negative length in INTEGER MILLIMETRES. Use for offsets and sills, where zero is meaningful.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "area_m2": {
+      "description": "A float area in SQUARE METRES, transcribed exactly as the publisher prints it. One of only three float-valued field families in the whole spec.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "entity_id": {
+      "description": "Globally unique id, LEVEL-PREFIXED: 'G_' for anything in spec/ground.json, 'A_' for anything in spec/attic.json. The prefix makes cross-file collisions structurally unlikely; the loader additionally asserts global uniqueness across all id-bearing collections and rejects a merge that would otherwise be last-write-wins. Prefixes: G_ = ground level, A_ = attic level, R_ = roof-scoped (not level-scoped; lives in meta.json, e.g. roof_openings). The per-file prefix check applies only to the level files, so R_ ids are valid in meta.json only.",
+      "type": "string",
+      "pattern": "^[GAR]_[A-Za-z0-9_]+$"
+    },
+    "level_id": {
+      "description": "Storey identifier. Deliberately a closed enum: this building has exactly two storeys, and a typo'd level string would otherwise silently orphan a wall.",
+      "type": "string",
+      "enum": [
+        "ground",
+        "attic"
+      ]
+    },
+    "point_mm": {
+      "description": "[x, y] in the single shared coordinate frame, integer millimetres. Origin at the building's outer south-west corner, +x east, +y north. BOTH levels use this same frame.",
+      "type": "array",
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/length_mm"
+        },
+        {
+          "$ref": "#/$defs/length_mm"
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2,
+      "items": false
+    },
+    "layer": {
+      "description": "One material layer of a wall or slab build-up, listed from inside face to outside face.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "material",
+        "thickness"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "material": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thickness": {
+          "description": "Layer thickness in millimetres. The loader asserts the layer thicknesses sum exactly to the parent's `thickness`.",
+          "$ref": "#/$defs/extent_mm"
+        },
+        "note": {
+          "$ref": "#/$defs/note"
+        },
+        "derived": {
+          "$ref": "#/$defs/derived"
+        },
+        "derived_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "disputed": {
+          "$ref": "#/$defs/disputed"
+        },
+        "disputed_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "dispute_ref": {
+          "$ref": "#/$defs/dispute_ref"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_rules"
+        }
+      ]
+    },
+    "build_up": {
+      "description": "A named layered assembly (exterior wall, ceiling slab). Total thickness plus its layers; the loader asserts sum(layers[].thickness) == thickness so the two can never drift apart.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "thickness",
+        "layers"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "thickness": {
+          "$ref": "#/$defs/extent_mm"
+        },
+        "layers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/layer"
+          }
+        },
+        "note": {
+          "$ref": "#/$defs/note"
+        },
+        "source_image": {
+          "$ref": "#/$defs/source_image"
+        },
+        "derived": {
+          "$ref": "#/$defs/derived"
+        },
+        "derived_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "disputed": {
+          "$ref": "#/$defs/disputed"
+        },
+        "disputed_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "dispute_ref": {
+          "$ref": "#/$defs/dispute_ref"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_rules"
+        }
+      ]
+    },
+    "level": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "elevation",
+        "ceiling_height"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "id": {
+          "$ref": "#/$defs/level_id"
+        },
+        "name": {
+          "description": "Publisher's verbatim level name, e.g. 'PARTER', 'PODDASZE'.",
+          "type": "string",
+          "minLength": 1
+        },
+        "elevation": {
+          "description": "Finished floor level, millimetres relative to the ±0.00 ground-floor datum.",
+          "$ref": "#/$defs/length_mm"
+        },
+        "ceiling_height": {
+          "description": "CLEAR height floor-to-ceiling in millimetres (wysokość w świetle), not floor-to-floor. T06 asserts 2000–4000 mm as a scale-error tripwire.",
+          "$ref": "#/$defs/extent_mm"
+        },
+        "note": {
+          "$ref": "#/$defs/note"
+        },
+        "source_image": {
+          "$ref": "#/$defs/source_image"
+        },
+        "derived": {
+          "$ref": "#/$defs/derived"
+        },
+        "derived_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "disputed": {
+          "$ref": "#/$defs/disputed"
+        },
+        "disputed_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "dispute_ref": {
+          "$ref": "#/$defs/dispute_ref"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_rules"
+        }
+      ]
+    },
+    "wall": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "level",
+        "start",
+        "end",
+        "thickness",
+        "type"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "id": {
+          "$ref": "#/$defs/entity_id"
+        },
+        "level": {
+          "$ref": "#/$defs/level_id"
+        },
+        "start": {
+          "$ref": "#/$defs/point_mm"
+        },
+        "end": {
+          "$ref": "#/$defs/point_mm"
+        },
+        "thickness": {
+          "description": "Total wall thickness in millimetres, centred on the start–end centreline. Exterior ≈ 465 (Porotherm 250 + EPS 200 + render); partitions are typically Porotherm 115 or 250 — read which off the plan hatching, do not assume.",
+          "$ref": "#/$defs/extent_mm"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "exterior",
+            "partition",
+            "structural"
+          ]
+        },
+        "layers": {
+          "description": "Optional layer build-up, inside face first. When present the loader asserts the layers sum to `thickness`. T07/T11 need addressable layers on exterior walls so window reveals show correct depth and T15 can switch the measurement face.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/layer"
+          }
+        },
+        "height": {
+          "description": "Optional override of the level's ceiling_height for this wall alone, millimetres. Use for the attic knee wall and for gable infill; omit for ordinary walls.",
+          "$ref": "#/$defs/extent_mm"
+        },
+        "note": {
+          "$ref": "#/$defs/note"
+        },
+        "source_image": {
+          "$ref": "#/$defs/source_image"
+        },
+        "derived": {
+          "$ref": "#/$defs/derived"
+        },
+        "derived_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "disputed": {
+          "$ref": "#/$defs/disputed"
+        },
+        "disputed_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "dispute_ref": {
+          "$ref": "#/$defs/dispute_ref"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_rules"
+        }
+      ]
+    },
+    "opening": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "wall",
+        "offset",
+        "width",
+        "height",
+        "sill",
+        "kind"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "id": {
+          "$ref": "#/$defs/entity_id"
+        },
+        "wall": {
+          "description": "Id of the host wall. The loader asserts it resolves to an existing wall.",
+          "$ref": "#/$defs/entity_id"
+        },
+        "offset": {
+          "description": "Distance in millimetres from the host wall's `start` point to the near edge of the opening, measured along the centreline. T10 asserts offset + width <= wall length.",
+          "$ref": "#/$defs/offset_mm"
+        },
+        "width": {
+          "$ref": "#/$defs/extent_mm"
+        },
+        "height": {
+          "$ref": "#/$defs/extent_mm"
+        },
+        "sill": {
+          "description": "Height in millimetres from the level's finished floor to the bottom of the opening. 0 for doors, balcony doors and passages. Where not printed on the plan, mark `derived` with the assumed value stated in `note` (windows are typically 850–900).",
+          "$ref": "#/$defs/offset_mm"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "window",
+            "door",
+            "passage"
+          ]
+        },
+        "swing": {
+          "description": "Hinge side as read off the swing arc on the plan, looking in the wall's start→end direction. 'none' for windows, fixed glazing and cased passages. Required for kind='door' — the arc is printed, so omitting it means it was not read.",
+          "type": "string",
+          "enum": [
+            "left",
+            "right",
+            "none"
+          ]
+        },
+        "note": {
+          "$ref": "#/$defs/note"
+        },
+        "source_image": {
+          "$ref": "#/$defs/source_image"
+        },
+        "derived": {
+          "$ref": "#/$defs/derived"
+        },
+        "derived_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "disputed": {
+          "$ref": "#/$defs/disputed"
+        },
+        "disputed_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "dispute_ref": {
+          "$ref": "#/$defs/dispute_ref"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_rules"
+        },
+        {
+          "if": {
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "door"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "swing"
+            ]
+          }
+        }
+      ]
+    },
+    "room_measurement": {
+      "description": "OPTIONAL per-room override of the measurement convention. Omit it and the room takes the model-wide default, which is what every room but one does — this exists so that the single carve-out in the project is visible as DATA in the spec rather than as a room id branched on inside the geometry kernel.\n\n'face' — which face this room's published area is measured to. 'finish' is the project default: the structure face inset by construction.finish_allowance per face, i.e. w świetle ścian per PN-ISO 9836. 'structure' means the room takes NO finish allowance on any edge.\n\n'extends_under' — ids of this room's own boundary walls whose footprint lies INSIDE the room's plan projection rather than bounding it. The room polygon is grown across each named wall to its far face. This is for a balustrade standing at the head of a slab opening: the guard is a rail above the void, not a boundary of the void, so the opening runs to the slab edge underneath it. Each id must appear in the room's own 'boundary' and the wall must be axis-aligned; the loader and the kernel both check.\n\nAs of T19 the only user is A_R4 (Schody), whose boundaries are a slab opening rather than plastered masonry. Its 'note' carries the justification.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "face"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "face": {
+          "type": "string",
+          "enum": [
+            "structure",
+            "finish"
+          ]
+        },
+        "extends_under": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/entity_id"
+          }
+        }
+      }
+    },
+    "room": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "published_id",
+        "name",
+        "level",
+        "boundary",
+        "published_area",
+        "area_groups"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "id": {
+          "$ref": "#/$defs/entity_id"
+        },
+        "published_id": {
+          "description": "The room number Archon prints on the plan and uses in its area table (data/source/published_rooms_*.xml, mirrored into data/published.json). REQUIRED because names are not unique — there are two 'Pokój 11.99' and two 'Strych ocieplony' — so T10's both-directions completeness check cannot match on name alone.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "name": {
+          "description": "The publisher's VERBATIM Polish name ('Strych ocieplony', not 'Poddasze'; 'Salon + Jadalnia' as in the XML). T10 matches on it.",
+          "type": "string",
+          "minLength": 1
+        },
+        "level": {
+          "$ref": "#/$defs/level_id"
+        },
+        "boundary": {
+          "description": "Ids of the walls enclosing this room, in any order. The loader asserts each id resolves and belongs to the same level as the room. T07 polygonises the wall network and selects the enclosed face rather than trusting this ordering.",
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/entity_id"
+          }
+        },
+        "seed": {
+          "description": "Optional interior point [x, y] in millimetres, used by T07 to select which polygonised face is this room. Supply it for non-convex (L-shaped) rooms where the naive boundary centroid may fall outside the room.",
+          "$ref": "#/$defs/point_mm"
+        },
+        "measure_to": {
+          "$ref": "#/$defs/room_measurement"
+        },
+        "published_area": {
+          "description": "REQUIRED. Powierzchnia użytkowa in m², verbatim from the publisher's table. Measured w świetle ścian to finished faces (PN-ISO 9836); in the attic subject to the 1.4 m / 2.2 m height banding. This field is what makes a room checkable at all, which is why it is mandatory rather than optional: a room silently created without one would be invisible to T08.",
+          "$ref": "#/$defs/area_m2"
+        },
+        "floor_area_m2": {
+          "description": "Optional. Powierzchnia podłóg in m² — the parenthesised figure on the plans, e.g. '30,57 (33,2) m²'. Raw floor area ignoring ceiling height, so it constrains the floor polygon directly WITHOUT the attic banding rule confounding it. Where printed, capture it: it is a free second independent equation per room and it is diagnostic (floor area passes + usable area fails ⟹ the banding rule is wrong, not the geometry).",
+          "$ref": "#/$defs/area_m2"
+        },
+        "area_groups": {
+          "description": "Which published aggregates this room is counted in. Encodes Archon's definitions explicitly so T09 cannot get them subtly wrong:\n  'usable'  — powierzchnia użytkowa 163.57 m². Includes the boiler room and the attic rooms; EXCLUDES the stairs.\n  'net'     — powierzchnia netto 127.02 m². INCLUDES the stairs; excludes the boiler room and the two Strych ocieplony rooms.\n  'attic'   — one of the two 'Strych ocieplony' rooms summing to the published 32.88 m².\n  'boiler'  — the Kotłownia, published separately as 7.31 m².\nSo: ordinary room → ['usable','net']; Kotłownia → ['usable','boiler']; each Strych ocieplony → ['usable','attic']; Schody → ['net']; Antresola → ['usable','net']. The loader asserts 'attic'/'boiler' are never combined with 'net'.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "usable",
+              "net",
+              "attic",
+              "boiler"
+            ]
+          }
+        },
+        "note": {
+          "$ref": "#/$defs/note"
+        },
+        "source_image": {
+          "$ref": "#/$defs/source_image"
+        },
+        "derived": {
+          "$ref": "#/$defs/derived"
+        },
+        "derived_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "disputed": {
+          "$ref": "#/$defs/disputed"
+        },
+        "disputed_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "dispute_ref": {
+          "$ref": "#/$defs/dispute_ref"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_rules"
+        }
+      ]
+    },
+    "dimension_chain": {
+      "description": "One printed dimension run: a sequence of segment dimensions plus the printed overall for that run.\n\nCENTIMETRES, VERBATIM. Both value fields carry a mandatory `_cm` suffix so no reader can mistake the unit. Transcribe exactly the digits printed on the plan and perform NO arithmetic — not the x10 to millimetres, not a sum, not a correction. kotewki.spec is the only place the x10 happens. A chain transcribed in cm but read as mm describes a house one tenth the size that still closes perfectly, and chain closure cannot detect it; that is why the suffix is mandatory and why T06 also asserts absolute magnitudes.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "level",
+        "axis",
+        "segments_cm",
+        "total_cm",
+        "source_image"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "id": {
+          "$ref": "#/$defs/entity_id"
+        },
+        "level": {
+          "$ref": "#/$defs/level_id"
+        },
+        "axis": {
+          "description": "Axis the chain runs along in the shared coordinate frame.",
+          "type": "string",
+          "enum": [
+            "x",
+            "y"
+          ]
+        },
+        "segments_cm": {
+          "description": "Segment dimensions in CENTIMETRES, in order along the axis, exactly as printed. T06 asserts sum(segments_cm) == total_cm with EXACT integer equality and no tolerance.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          }
+        },
+        "total_cm": {
+          "description": "The printed overall for this run, in CENTIMETRES. Transcribe the number that is printed — never a sum you computed, or the closure check checks nothing.",
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "source_image": {
+          "description": "REQUIRED for chains: every chain must be traceable back to the plan it was read from, for T15 dispute resolution.",
+          "$ref": "#/$defs/source_image"
+        },
+        "extent": {
+          "description": "Optional tag naming the physical run this chain spans, e.g. 'overall_width', 'south_facade'. Chains sharing (level, axis, extent) are redundant transcriptions of the same distance and T06 asserts their totals agree. A chain with no partner is not cross-checked, so T06 reports how many were.",
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "$ref": "#/$defs/note"
+        },
+        "derived": {
+          "$ref": "#/$defs/derived"
+        },
+        "derived_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "disputed": {
+          "$ref": "#/$defs/disputed"
+        },
+        "disputed_fields": {
+          "$ref": "#/$defs/field_list"
+        },
+        "dispute_ref": {
+          "$ref": "#/$defs/dispute_ref"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_rules"
+        }
+      ]
+    },
+    "slab_opening": {
+      "description": "A region of a level where the FLOOR SLAB IS ABSENT. Two real cases in this house: the double-height void over the living room ('Pustka nad salonem') and the stairwell. Without this entity the generator floors over both, which destroys the double-height space and seals the stair — and NO dimensional check catches it, because every room area on both levels stays exactly correct. That is the same class of silent defect as a mirrored plan.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "level",
+        "bounds",
+        "kind",
+        "note"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "id": {
+          "$ref": "#/$defs/entity_id"
+        },
+        "level": {
+          "$ref": "#/$defs/level_id"
+        },
+        "bounds": {
+          "description": "Axis-aligned rectangle [x0, y0, x1, y1] in shared-frame millimetres.",
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "void",
+            "stairwell"
+          ],
+          "description": "'void' = intentional double-height opening; 'stairwell' = vertical circulation."
+        },
+        "connects_levels": {
+          "description": "For kind='stairwell': the two level ids this opening joins, enabling the connectivity check to traverse between storeys. Without it a stair-only room reads as unreachable.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/level_id"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "note": {
+          "$ref": "#/$defs/note"
+        },
+        "source_image": {
+          "$ref": "#/$defs/source_image"
+        },
+        "derived": {
+          "$ref": "#/$defs/derived"
+        },
+        "derived_fields": {
+          "$ref": "#/$defs/field_list"
+        }
+      }
+    },
+    "roof_opening": {
+      "description": "An opening in a ROOF PLANE (roof window / velux). The schema's `openings` cannot express these: every opening must name a host wall, and a roof plane is not a wall. Same class of gap as `slab_openings`. An axis-aligned PLAN rectangle is sufficient and no plane/slope vector is needed: a roof window's jambs are cut square through the rafters and its head and sill are horizontal, so its plan projection IS a rectangle, and the plane is fully determined by roof.pitch_deg + roof.ridge_axis + the derived ridge. A window straddling the ridge, or a hipped/shed roof, WOULD need more - the generator refuses that case loudly rather than cutting the apex.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "slope",
+        "bounds",
+        "width",
+        "height_on_slope",
+        "note"
+      ],
+      "properties": {
+        "_comment": {
+          "$ref": "#/$defs/comment"
+        },
+        "id": {
+          "$ref": "#/$defs/entity_id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "roof_window"
+          ]
+        },
+        "slope": {
+          "type": "string",
+          "enum": [
+            "north",
+            "south"
+          ],
+          "description": "Which side of the ridge. CHECKED against bounds by the generator, not trusted."
+        },
+        "bounds": {
+          "description": "Axis-aligned plan rectangle [x0, y0, x1, y1] in shared-frame millimetres.",
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "width": {
+          "$ref": "#/$defs/offset_mm"
+        },
+        "height_on_slope": {
+          "description": "Height measured along the slope, millimetres, as printed in the callout.",
+          "$ref": "#/$defs/offset_mm"
+        },
+        "note": {
+          "$ref": "#/$defs/note"
+        },
+        "source_image": {
+          "$ref": "#/$defs/source_image"
+        },
+        "derived": {
+          "$ref": "#/$defs/derived"
+        },
+        "derived_fields": {
+          "$ref": "#/$defs/field_list"
+        }
+      }
+    }
+  }
+}

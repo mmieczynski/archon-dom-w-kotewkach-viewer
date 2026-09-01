@@ -8,9 +8,9 @@ subagent prompt with no additional context beyond `README.md` and `TESTS.md`.
 
 | ID | Task | Depends on | Parallelisable with |
 |---|---|---|---|
-| [T01](tasks/T01.md) | Repo scaffold & tooling | — | T02, T03 |
-| [T02](tasks/T02.md) | Spec JSON Schema | — | T01, T03 |
-| [T03](tasks/T03.md) | Source data acquisition | — | T01, T02 |
+| [T01](tasks/T01.md) | ~~Repo scaffold & tooling~~ **DONE** | — | T02, T03 |
+| [T02](tasks/T02.md) | ~~Spec JSON Schema~~ **DONE** | — | T01, T03 |
+| [T03](tasks/T03.md) | ~~Source data acquisition~~ **DONE** | — | T01, T02 |
 | [T04](tasks/T04.md) | Transcribe ground floor | T02, T03 | T05 |
 | [T05](tasks/T05.md) | Transcribe attic | T02, T03 | T04 |
 | [T06](tasks/T06.md) | **Test 1** — chain closure | T02 | T07 |
@@ -22,9 +22,10 @@ subagent prompt with no additional context beyond `README.md` and `TESTS.md`.
 | [T12](tasks/T12.md) | glTF export + **Test 5** mesh checks | T11 | T13, T14 |
 | [T13](tasks/T13.md) | **Test 6** — orthographic overlay | T11, T03 | T12, T14 |
 | [T14](tasks/T14.md) | three.js browser viewer | T12 | T13 |
-| [T15](tasks/T15.md) | Confirm finish allowance *(norm resolved by T03)* | T04, T07 | — |
+| [T15](tasks/T15.md) | ~~Confirm finish allowance~~ **SUPERSEDED** — see below | T04, T07 | — |
 | [T16](tasks/T16.md) | CI wiring & build pipeline | T06, T08–T13 | — |
-| [T17](tasks/T17.md) | **Resolve roof discrepancy** *(blocks T11 roof, T09)* | T03 | anything |
+| [T17](tasks/T17.md) | ~~Resolve roof discrepancy~~ **DONE** — 35° confirmed | T03 | — |
+| [T18](tasks/T18.md) | Resolve three residuals against the images | T03, T05, T08 | T09, T12, T13 |
 
 ## Dependency graph
 
@@ -52,8 +53,35 @@ T03 ─┘                                             │
 **Wave 1 (fully parallel, 3 agents):** T01, T02, T03
 **Wave 2 (parallel, 4 agents):** T04, T05, T06, T07
 **Wave 3 (parallel, 4 agents):** T08, T10, T11, T15
-**Wave 4 (parallel, 3 agents):** T09, T12, T13
+**Wave 4 (parallel, 4 agents):** T09, T12, T13, T18
 **Wave 5:** T14, T16
+
+**Golden-image sign-off is deferred to the very end** (user instruction, 2026-08-31). T13
+generates overlays into `build/` and leaves `tests/golden/` empty; the overlay test skips
+with a message saying goldens are pending human sign-off. This is deliberate — auto-accepted
+goldens are worthless — and it is the last gate before the project is done.
+
+**The repository stays local: no remote, no hosted CI** (user instruction, 2026-08-31).
+`data/source/` contains Archon's copyrighted plan bitmaps, so publishing the repo would
+redistribute them. T16 therefore wires the build and checks through `justfile` plus a local
+pre-commit hook, not GitHub Actions.
+
+## T15 is superseded, not skipped
+
+T15 asked two questions and both are answered, so running it would re-derive a settled
+result:
+
+- **Which measurement norm?** PN-ISO 9836, *w świetle ścian*, banded 1.4 m / 2.2 m —
+  resolved by T03 and corroborated by the `140`/`220` contour labels printed on the attic
+  plan itself.
+- **What finish allowance?** 20 mm per face. T08 swept the allowance across all 18 area
+  equations and got a convex curve with its optimum at 19 mm; 20 mm is indistinguishable
+  (RMS 0.64% vs 0.63%) and is the round number an architect would use. The sweep is
+  runnable: `uv run python tests/test_room_areas.py --sweep`.
+
+The evidence lives in `README.md` rather than in a T15 report. What T15 was really guarding
+against — a *uniform* offset across every room, which would mean the norm was wrong rather
+than the geometry — did not occur: the residuals are scattered and room-specific.
 
 ## Critical sequencing constraint
 
@@ -81,10 +109,24 @@ other**, so ownership is exclusive: only the listed owner writes to a given path
 | `tests/test_*.py` | one module per test task, no overlap |
 | `tests/golden/` | T13 |
 | `viewer/` | T14 |
-| `.github/`, `build/REPORT.md` | T16 |
+| `hooks/`, `build/REPORT.md`, `justfile` (after T01) | T16 |
+| `docs/T18-findings.md` | T18 |
 
 **T01 creates empty module stubs only.** If it writes real content into `spec.py` or
 `geometry.py`, T02 and T07 will overwrite it and that work is wasted.
+
+### Cross-lane results route through the coordinator
+
+Two tasks produce values that land in a file they do not own. **They must not write it
+directly** — they report a recommendation, and the coordinator applies it:
+
+| Task | Produces | Lands in | Owned by |
+|---|---|---|---|
+| T17 | `roof.pitch_deg`, `eaves_overhang`, `springing` | `spec/meta.json` | T02 |
+| T15 | `construction.finish_allowance`, `measurement_norm` | `spec/meta.json` | T02 |
+
+`meta.json` carries `disputed: true` + `dispute_ref` on the roof block until T17 lands, so
+the unresolved state is explicit in the data rather than only in prose.
 
 ## Rules for every task
 

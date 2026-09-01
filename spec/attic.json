@@ -1,0 +1,554 @@
+{
+  "_comment": "OWNED BY T05 - attic (PODDASZE). Transcribed from data/source/plan_attic.png (853x853) with data/source/plan_attic_areas.png for the room names/areas. Coordinate frame is the SHARED frame: origin at the building's outer south-west corner, +x east, +y north, integer millimetres. Building outline 17100 x 9000 to raw structure; exterior wall 450 mm; interior clear 16200 x 8100. THE CEILING-HEIGHT CONTOURS (the primary transcription target of this task) - traced directly off the flat grey bands of plan_attic.png, which renders three flat tones: (157,158,160) below 1.40 m, (217,217,218) between 1.40 and 2.20 m, (235,236,236) above 2.20 m. Band edges were located sub-pixel on eight independent columns (120/150/200/240 in Strych 2, 600/650/700/740 in Strych 3); all eight give the same rows. Interior wall faces rows 189.25 and 520.24 (331.0 px = the printed 810 cm -> 40.863 px/m). Contour rows: 140-north 254.25, 220-north 301.05, 220-south 408.61, 140-south 455.27. Hence d140 = 1590 mm (north) / 1589 mm (south), d220 = 2734 mm (north) / 2730 mm (south); adopted d140 = 1589 mm, d220 = 2732 mm. In this shared frame the four contour lines are at y = 2039, y = 3182, y = 5818, y = 6961; the ridge is at y = 4500 and the contours are symmetric about it to within 2 mm. These agree with T17's d140 = 1.589 m and d220 = 2.726 m to 0 mm and 6 mm (a quarter of a pixel). Inverting them: tan(theta) = 0.800/(2.732-1.589) -> theta = 34.97 deg, implied knee wall 1400 - 1589*tan(35) = 286 mm and 2200 - 2732*tan(35) = 286 mm, against the published 290 mm. The contours are also recorded as dimension chain A_C6 so they are machine-readable and closure-checked against the printed 810. NOT MODELLED HERE, and handed to T11: three roof windows '78/160' printed in the SOUTH roof slope over the Antresola (dashed outlines at plan x 344-378, 380-415, 417-450 px, i.e. centres x = 6964, 7855, 8733 mm, plan-projected extent y = 1162..2433 mm). CORRECTED IN T18/T19: that y extent was measured to the INNER faces of the two dashed lines rather than their centres and is one pixel short. Line centre to line centre it is y = 1149..2446, depth 1296 +- 12 mm, which agrees with 1600 * cos35 = 1310.6 to 0.6 px. spec/meta.json's roof_openings[] carries the corrected bounds; see docs/T18-findings.md item 2. They are hosted by the roof, not by a wall, so the schema has nowhere to put them.",
+  "walls": [
+    {
+      "id": "A_W1",
+      "level": "attic",
+      "start": [
+        225,
+        225
+      ],
+      "end": [
+        16875,
+        225
+      ],
+      "thickness": 450,
+      "type": "exterior",
+      "height": 290,
+      "layers": [
+        {
+          "material": "Porotherm 25 (pustak ceramiczny)",
+          "thickness": 250
+        },
+        {
+          "material": "Termo Organika EPS (styropian)",
+          "thickness": 200
+        }
+      ],
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "height"
+      ],
+      "note": "South eaves wall (scianka kolankowa). Thickness 450 is NOT derived: it is forced by two printed numbers, the 810 cm interior clear depth printed on plan_attic.png and the 900 cm overall depth printed on plan_ground.png/site.png -> (900-810)/2 = 45 cm, and the plan draws 18.5 px = 0.452 m at 40.89 px/m. This does NOT contradict construction.exterior_wall.thickness in spec/meta.json, which is 460 mm FINISHED: the render sits OUTBOARD of the 17100 x 9000 structural outline the chains dimension, so 450 is the structural centreline thickness and 460 the finished one. Resolved; an earlier version of this note said 465, which was the 15 mm-render guess T04 later solved at 10 mm against the published 154.42 m2. height 290 is the published 29 cm knee wall (construction.knee_wall_height) applied as a per-wall override because the attic level's 2730 clear height only occurs at the ridge; above 290 mm this elevation is roof, not wall."
+    },
+    {
+      "id": "A_W2",
+      "level": "attic",
+      "start": [
+        16875,
+        225
+      ],
+      "end": [
+        16875,
+        8775
+      ],
+      "thickness": 450,
+      "type": "exterior",
+      "layers": [
+        {
+          "material": "Porotherm 25 (pustak ceramiczny)",
+          "thickness": 250
+        },
+        {
+          "material": "Termo Organika EPS (styropian)",
+          "thickness": 200
+        }
+      ],
+      "source_image": "data/source/plan_attic.png",
+      "note": "East gable wall. The ridge runs east-west (roof.ridge_axis = 'x'), so the east and west walls are the gables and rise with the roof; `height` is deliberately omitted so the generator trims this wall to the roof planes rather than to a single number. Its full-height zone is at the ridge, y = 4500, which is exactly where the printed 100/273 gable window sits (opening A_O2)."
+    },
+    {
+      "id": "A_W3",
+      "level": "attic",
+      "start": [
+        16875,
+        8775
+      ],
+      "end": [
+        225,
+        8775
+      ],
+      "thickness": 450,
+      "type": "exterior",
+      "height": 290,
+      "layers": [
+        {
+          "material": "Porotherm 25 (pustak ceramiczny)",
+          "thickness": 250
+        },
+        {
+          "material": "Termo Organika EPS (styropian)",
+          "thickness": 200
+        }
+      ],
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "height"
+      ],
+      "note": "North eaves wall (scianka kolankowa). See A_W1 for the thickness and knee-wall reasoning. Column scans at x = 150/220/300/500/650/700 show unbroken masonry from row 171 to row 188 - there is no opening anywhere in the north eaves wall."
+    },
+    {
+      "id": "A_W4",
+      "level": "attic",
+      "start": [
+        225,
+        8775
+      ],
+      "end": [
+        225,
+        225
+      ],
+      "thickness": 450,
+      "type": "exterior",
+      "layers": [
+        {
+          "material": "Porotherm 25 (pustak ceramiczny)",
+          "thickness": 250
+        },
+        {
+          "material": "Termo Organika EPS (styropian)",
+          "thickness": 200
+        }
+      ],
+      "source_image": "data/source/plan_attic.png",
+      "note": "West gable wall. See A_W2. Runs north-to-south so that its start is the shared north-west corner node; opening offsets on this wall are measured from y = 8775 southwards."
+    },
+    {
+      "id": "A_W5",
+      "level": "attic",
+      "start": [
+        4440,
+        225
+      ],
+      "end": [
+        4440,
+        8775
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Partition between Strych ocieplony (2) and Antresola. Position is fixed by the printed 393 cm room width: interior face at x = 450 + 3930 = 4380, centreline 4380 + 60. Thickness 120 mm is DERIVED and is the only free length on the x axis: the printed room widths 393 + 700 + 503 = 1596 must fit the interior clear 1620 (= printed 1710 minus 2 x 45), leaving 24 cm for two partitions, split evenly. Consistent with the drawn 5-6 px (0.12-0.15 m) and with a Porotherm 11.5 partition plus plaster. Centreline is run out to the exterior wall centrelines rather than stopping at their inner faces, so the wall graph is closed for polygonisation."
+    },
+    {
+      "id": "A_W6",
+      "level": "attic",
+      "start": [
+        11560,
+        225
+      ],
+      "end": [
+        11560,
+        8775
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Partition between Antresola and Strych ocieplony (3). Interior face at x = 4500 + 7000 = 11500 from the printed 700 cm Antresola width; the remaining bay is then 16650 - 11620 = 5030 = the printed 503 cm, so the x chain closes exactly. Thickness derived as for A_W5."
+    },
+    {
+      "id": "A_W7",
+      "level": "attic",
+      "start": [
+        4440,
+        4730
+      ],
+      "end": [
+        11560,
+        4730
+      ],
+      "thickness": 60,
+      "type": "partition",
+      "height": 1100,
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "thickness",
+        "height"
+      ],
+      "note": "Guard along the north edge of the Antresola, where the floor stops and the 'Pustka nad salonem' (void over the living room) begins. The edge itself is PRINTED: 425 cm from the south interior wall face, i.e. 450 + 4250 = 4700 mm. The drawn line sits at plan row 346.0, which in the T13 frame converts to 4720 +- 12 mm, 0.8 px from the printed 4700 (T18 item 1.1 and correction 10; the older reading of 4708 used 8555 rather than 8550 for the north wall face). Thickness 60 mm and height 1100 mm are derived (a balustrade, not masonry - the plan draws a single thin line, not hatched wall), and the guard's THICKNESS AND SIDE are undetermined from the ink: 4700 / 4730 / 4760 span 60 mm = 2.4 px and a 1-px line cannot separate them. The printed 4700 therefore fixes the floor edge, not the guard: the centreline is placed at 4730 so the guard occupies y 4700..4760 and the Antresola floor keeps the full printed 4250 mm depth. That 60 mm band is counted in Schody, not in Antresola - see A_R4's measure_to.extends_under, which is what stops the band belonging to neither room."
+    },
+    {
+      "id": "A_W8",
+      "level": "attic",
+      "start": [
+        5500,
+        4730
+      ],
+      "end": [
+        5500,
+        8775
+      ],
+      "thickness": 100,
+      "type": "partition",
+      "height": 1100,
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "thickness",
+        "height"
+      ],
+      "note": "Guard along the east edge of the stair opening (Schody); west face at x = 5450, which is the modelled east edge of the stairwell and gives a 950 mm clear width against the partition A_W5. Thickness 100 mm and height 1100 mm derived (balustrade). PROVENANCE CORRECTED (T18 item 1.1): this was previously traced to 'the continuous vertical line at plan column 298.9, present on rows 188-342'. No line exists at col 298.9 over rows 226-346. Over the flight the east boundary is a white-cored double line at cols 294.6..297.5 = x 5338..5409, centre 5374 +- 15, so the DRAWN clear width over the flight is 872 +- 20 mm, not 950. The col-299 line is real but runs on rows 190-225 only and is the WEST edge of the bottom landing box, x 5435 +- 15 (east edge x 5698 +- 15). So the landing box is x 5435..5698, y 7660..8550, about 0.23 m2, and it IS floor - drawn in the floor tone 236 rather than the Pustka's void tone 197, with the stair's walking line originating inside it - not a post and not furniture. It is still NOT modelled: on A_R4's 950 mm rectangle it would over-read to +6.8%, because the omitted landing (+0.23 m2) and the 76 mm-too-wide flight (-0.22 m2) very nearly cancel. See room A_R4's note and docs/T18-findings.md item 1."
+    },
+    {
+      "id": "A_W9",
+      "level": "attic",
+      "start": [
+        11560,
+        5130
+      ],
+      "end": [
+        12240,
+        5130
+      ],
+      "thickness": 610,
+      "type": "structural",
+      "source_image": "data/source/plan_attic.png",
+      "derived": true,
+      "note": "Chimney stack (komin) standing against the east face of partition A_W6, inside Strych ocieplony (3). Drawn solid black at plan x 551.5..577.1, y 316.25..341.25 -> 620 x 610 mm at 40.9 px/m, +/-25 mm. Not dimensioned anywhere, hence fully derived. Modelled as a stub so the room polygon nets it off: together with A_W10 it accounts for 0.78 m2, which is exactly what reconciles Strych ocieplony (3) to its published 39.48 m2 floor area. Two chimneys are visible above the ridge on data/source/elevation_side_1.png and elevation_side_2.png, corroborating that these black blocks are stacks and not piers. `height` omitted: the stack passes through the roof and is T11's to terminate."
+    },
+    {
+      "id": "A_W10",
+      "level": "attic",
+      "start": [
+        16000,
+        3170
+      ],
+      "end": [
+        16875,
+        3170
+      ],
+      "thickness": 620,
+      "type": "structural",
+      "source_image": "data/source/plan_attic.png",
+      "derived": true,
+      "note": "Second chimney stack, against the inner face of the east gable wall inside Strych ocieplony (3). Drawn solid black at plan x 731.25..757.5, y 396..421.5 -> 650 x 620 mm at 40.9 px/m, +/-25 mm. Fully derived; see A_W9."
+    }
+  ],
+  "openings": [
+    {
+      "id": "A_O1",
+      "wall": "A_W4",
+      "offset": 4275,
+      "width": 1000,
+      "height": 2730,
+      "sill": 0,
+      "kind": "window",
+      "swing": "none",
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "offset",
+        "sill"
+      ],
+      "note": "West gable window, callout '100/273' printed on plan_attic.png = 100 cm wide x 273 cm high. Width confirmed by the break in the drawn masonry: rows 354.5..395.5 = 41.0 px = 1003 mm at 40.89 px/m. Its north jamb lands exactly on the ridge line y = 4500, so the opening occupies y 3500..4500; A_W4 starts at the north-west corner (225, 8775) so offset = 8775 - 4500 = 4275. sill 0 is DERIVED: no sill is printed, and the printed 273 cm head equals the attic clear height at the ridge, which is only reachable from floor level. The head is therefore cut by the roof plane going south from the ridge - data/source/elevation_side_2.png shows the gable glazing with a raking head. The schema stores a rectangle, so height 2730 is the MAXIMUM height, at the ridge edge; T11 should trim the head to the roof. CORROBORATED IN T18 on the two gable renders data/source/elevation_side_1.png and data/source/elevation_side_2.png, and offset stays derived - no printed dimension locates it, it is just no longer uncorroborated. On BOTH gables the window's near jamb sits ON the ridge line to under 1 px (+0.4 px on side_1, +0.7 px on side_2, i.e. 7 mm and 13 mm, against the +-2 px / +-37 mm those renders support); a CENTRED window would put that jamb 28.5 px away, so the two hypotheses are 29 px apart where the noise is 2 px and 'centred' is excluded. The ridge apex was obtained by intersecting the two fitted rake lines, which needs no scale; the fitted slope, 34.83 deg, is itself an independent confirmation of the 35 deg pitch. Which window is north of the ridge and which is south is confirmed independently by the CHIMNEY positions: on side_1 the near stack reads y 4852..5522 against A_W9's plan y 4825..5435, so north is to the right and side_1 is the EAST gable (A_W2, bay north of the ridge, y 4500..5509 against A_O2's 4500..5500, 9 mm); side_2 is then the WEST gable (A_W4, bay south of the ridge, y 3479..4500 against A_O1's 3500..4500, 21 mm). RECORDED, NOT ACTED ON: the renders put the GLAZING at z ~ 3584..5913 where this opening is 3040..5770, a ~0.5 m vertical difference, with the bay below the eaves reading as a concrete spandrel. The printed 100/273 callout is the authority and a marketing render is not, so nothing here is changed on that evidence; it is flagged so the next reader is not surprised by it. See docs/T18-findings.md item 3."
+    },
+    {
+      "id": "A_O2",
+      "wall": "A_W2",
+      "offset": 4275,
+      "width": 1000,
+      "height": 2730,
+      "sill": 0,
+      "kind": "window",
+      "swing": "none",
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "offset",
+        "sill"
+      ],
+      "note": "East gable window, callout '100/273'. Masonry break at rows 313.5..354.5 = 41.0 px = 1003 mm; its SOUTH jamb lands on the ridge y = 4500, so the opening occupies y 4500..5500 and, A_W2 starting at (16875, 225), offset = 4500 - 225 = 4275. The two gable windows are therefore mirror images about the ridge and share the same offset. See A_O1 for the sill and the raking head. CORROBORATED IN T18 on the two gable renders data/source/elevation_side_1.png and data/source/elevation_side_2.png, and offset stays derived - no printed dimension locates it, it is just no longer uncorroborated. On BOTH gables the window's near jamb sits ON the ridge line to under 1 px (+0.4 px on side_1, +0.7 px on side_2, i.e. 7 mm and 13 mm, against the +-2 px / +-37 mm those renders support); a CENTRED window would put that jamb 28.5 px away, so the two hypotheses are 29 px apart where the noise is 2 px and 'centred' is excluded. The ridge apex was obtained by intersecting the two fitted rake lines, which needs no scale; the fitted slope, 34.83 deg, is itself an independent confirmation of the 35 deg pitch. Which window is north of the ridge and which is south is confirmed independently by the CHIMNEY positions: on side_1 the near stack reads y 4852..5522 against A_W9's plan y 4825..5435, so north is to the right and side_1 is the EAST gable (A_W2, bay north of the ridge, y 4500..5509 against A_O2's 4500..5500, 9 mm); side_2 is then the WEST gable (A_W4, bay south of the ridge, y 3479..4500 against A_O1's 3500..4500, 21 mm). RECORDED, NOT ACTED ON: the renders put the GLAZING at z ~ 3584..5913 where this opening is 3040..5770, a ~0.5 m vertical difference, with the bay below the eaves reading as a concrete spandrel. The printed 100/273 callout is the authority and a marketing render is not, so nothing here is changed on that evidence; it is flagged so the next reader is not surprised by it. See docs/T18-findings.md item 3."
+    },
+    {
+      "id": "A_O3",
+      "wall": "A_W5",
+      "offset": 3250,
+      "width": 900,
+      "height": 2000,
+      "sill": 0,
+      "kind": "door",
+      "swing": "right",
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "offset",
+        "width",
+        "height"
+      ],
+      "note": "Door from the Antresola into Strych ocieplony (2). No stolarka callout is printed for it on plan_attic.png. Position IS traced: the partition is broken at rows 359.5..396.5 = 37.0 px = 905 mm -> y 3475..4375, offset 3475 - 225 = 3250 from the wall start (4440, 225). Width recorded as the standard 900 the drawing measures; height 2000 assumed (nothing printed). SWING: the arc is unambiguous - the leaf is hinged on the NORTH jamb (y = 4375) and opens westwards into Strych ocieplony (2). Encoded as 'right' under the convention 'looking along the host wall from start to end, left = the jamb nearer start, right = the jamb nearer end'; A_W5 runs south to north, so the north jamb is 'right'. The physical fact is stated here in words so a different downstream convention is recoverable."
+    },
+    {
+      "id": "A_O4",
+      "wall": "A_W6",
+      "offset": 3250,
+      "width": 900,
+      "height": 2000,
+      "sill": 0,
+      "kind": "door",
+      "swing": "right",
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "offset",
+        "width",
+        "height"
+      ],
+      "note": "Door from the Antresola into Strych ocieplony (3). Partition broken at rows 359.5..396.5, identical to A_O3, so the two doors are at the same offset 3250. Hinged on the NORTH jamb, opening eastwards into Strych ocieplony (3); see A_O3 for the swing convention and for why width/height are derived."
+    },
+    {
+      "id": "A_O5",
+      "wall": "A_W7",
+      "offset": 60,
+      "width": 950,
+      "height": 1100,
+      "sill": 0,
+      "kind": "passage",
+      "swing": "none",
+      "source_image": "data/source/plan_attic.png",
+      "derived": true,
+      "note": "Stair arrival: the gap in the A_W7 balustrade where you step off the stairs onto the Antresola. A_W7 was transcribed as running the full width x 4440..11560, which seals the top of the stairs - architecturally impossible, and T10's connectivity check caught it (Antresola and both Strych rooms unreachable). Evidence for the gap: balustrade POSTS are drawn along the y=4730 line and the westernmost post sits at x~5450, exactly the east edge of the stairwell A_SO2 - so the balustrade starts there and does not cross the stair. Spans the stairwell width x 4500..5450, i.e. offset 60 from A_W7's start at x 4440, width 950. Modelled as a passage OPENING rather than by shortening A_W7, deliberately: shortening the wall would merge Antresola and Schody into a single polygonised face and destroy both their room areas, whereas an opening restores circulation while keeping the faces separate. Derived - no opening is dimensioned here."
+    }
+  ],
+  "rooms": [
+    {
+      "id": "A_R1",
+      "published_id": 1,
+      "name": "Antresola",
+      "level": "attic",
+      "boundary": [
+        "A_W1",
+        "A_W5",
+        "A_W6",
+        "A_W7"
+      ],
+      "seed": [
+        8000,
+        2500
+      ],
+      "published_area": 14.51,
+      "floor_area_m2": 29.4,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_attic_areas.png",
+      "note": "Mezzanine over the ground-floor living room; the north part of this middle bay is the double-height 'Pustka nad salonem' and is NOT floor. Floor polygon x 4500..11500 (printed 700 cm), y 450..4700 (printed 425 cm) = 29.75 m2 raw; less the 20 mm/face finish allowance this is 29.30 m2 if the open north edge also takes the allowance and 29.44 m2 if it does not, bracketing the published 29.40 m2 (-0.3% / +0.1%). published_area 14.51 is the height-banded figure and CANNOT be checked from this polygon alone - the room lies wholly in the south roof slope, so its counted depth is (4700-3182) + 0.5*(3182-2039) = 2090 mm and 6.96 x 2.090 = 14.54 m2 (+0.2%), or 14.40 m2 (-0.7%) if the north edge takes the finish allowance too. area_groups: an ordinary room, counted in both powierzchnia uzytkowa and powierzchnia netto."
+    },
+    {
+      "id": "A_R2",
+      "published_id": 2,
+      "name": "Strych ocieplony",
+      "level": "attic",
+      "boundary": [
+        "A_W1",
+        "A_W3",
+        "A_W4",
+        "A_W5"
+      ],
+      "seed": [
+        2400,
+        4500
+      ],
+      "published_area": 14.67,
+      "floor_area_m2": 31.31,
+      "area_groups": [
+        "usable",
+        "attic"
+      ],
+      "source_image": "data/source/plan_attic_areas.png",
+      "note": "West insulated attic space. Publisher's verbatim name ('Strych ocieplony', not 'Poddasze'); there are two of them, so published_id is what distinguishes them. Floor polygon x 450..4380 (printed 393 cm), y 450..8550 (printed 810 cm) = 31.83 m2 raw; less 20 mm/face, 3.89 x 8.06 = 31.35 m2 against the published 31.31 m2 (+0.1%). Spans the full depth, so both roof slopes band it: counted depth = 2636 + 0.5*2286 = 3779 mm from the traced contours, giving 3.89 x 3.779 = 14.70 m2 against the published 14.67 m2 (+0.2%). area_groups ['usable','attic']: it is inside powierzchnia uzytkowa 163.57 and it is one of the two rooms summing to the published powierzchnia strychu 32.88 = 14.67 + 18.21; it is NOT in powierzchnia netto."
+    },
+    {
+      "id": "A_R3",
+      "published_id": 3,
+      "name": "Strych ocieplony",
+      "level": "attic",
+      "boundary": [
+        "A_W2",
+        "A_W1",
+        "A_W3",
+        "A_W6",
+        "A_W9",
+        "A_W10"
+      ],
+      "seed": [
+        14000,
+        6500
+      ],
+      "published_area": 18.21,
+      "floor_area_m2": 39.48,
+      "area_groups": [
+        "usable",
+        "attic"
+      ],
+      "source_image": "data/source/plan_attic_areas.png",
+      "note": "East insulated attic space. Floor polygon x 11620..16650 (printed 503 cm), y 450..8550 (printed 810 cm) = 40.74 m2 gross, less the two chimney stacks A_W9 (0.38 m2) and A_W10 (0.40 m2) and the 20 mm/face finish allowance: 4.99 x 8.06 - 0.78 = 39.44 m2 against the published 39.48 m2 (-0.1%). The chimneys are not optional here: without them this room over-reads its published floor area by 1.9%, which is the single largest discrepancy on this level. Banded: counted depth 3779 mm as for A_R2, so 4.99 x 3.779 = 18.86 m2, less the chimneys' banded share (A_W9 lies wholly above 2.2 m, A_W10 straddles the 2.2 m contour) 0.68 m2 = 18.18 m2 against the published 18.21 m2 (-0.2%)."
+    },
+    {
+      "id": "A_R4",
+      "published_id": 4,
+      "name": "Schody",
+      "level": "attic",
+      "boundary": [
+        "A_W3",
+        "A_W5",
+        "A_W7",
+        "A_W8"
+      ],
+      "seed": [
+        5000,
+        7000
+      ],
+      "measure_to": {
+        "face": "structure",
+        "extends_under": [
+          "A_W7"
+        ]
+      },
+      "published_area": 3.64,
+      "area_groups": [
+        "net"
+      ],
+      "source_image": "data/source/plan_attic_areas.png",
+      "note": "Stair from the ground floor, arriving against the west partition of the middle bay. area_groups is ['net'] ONLY: powierzchnia uzytkowa 163.57 EXCLUDES the stairs (163.57 = 116.18 ground + 14.51 + 14.67 + 18.21) while powierzchnia netto 127.02 INCLUDES them (123.38 + 3.64). Getting this wrong shows up as a 3.64 m2 error that looks like a geometry bug. NOTE ALSO that 3.64 is NOT height-banded and is not a banded figure to test against: the published level floor area 103.83 = 29.40 + 31.31 + 39.48 + 3.64, so 3.64 is this room's plain floor area and T09/T08 must compare it against the raw polygon, not the banded one (banded it would be about 1.55 m2, since the stairwell sits under the north slope). Polygon x 4500..5450, y 4700..8550 = 3.6575 m2 against 3.64 (+0.5%), measured at STRUCTURE. WHY THIS ROOM CARRIES measure_to AND NO OTHER DOES: Schody is not a room measured w swietle scian. Under PN-ISO 9836 a stair counts as the plan projection of its flight and landings - the slab opening - and two of this opening's four edges are a void edge and a guard, which have no plaster to deduct. The 20 mm/face finish allowance is EXCLUDED here, not mis-tuned: the drawn L has a 10.084 m perimeter, so A(t) = 3.645 - 10.084*t and staying inside +-1% of 3.64 needs t <= 4.1 mm/face. Every allowance from 5 mm up fails and 20 mm misses by 5.4%; no value of the allowance rescues this room, only dropping it does (T18 1.2). Applying it is what produced the old -6.3% residual. The south edge is the PRINTED 4700 (chain A_C5: 450 wall + 4250 Antresola depth), not the traced 4720 +- 12: the drawn line is 1 px wide, 1 px is 24.4 mm, and 4700 is 0.8 px inside its blur, so the printed number wins. measure_to.extends_under names A_W7 because the modelled 60 mm guard occupies 4700..4760 and its thickness and side are undetermined from the ink (a single 1-px line; T18 'Limits' 1). The printed 4700 fixes the FLOOR edge: Antresola keeps its printed 450..4700 depth and the guard stands on the void side of the slab edge, which is what a balustrade at a stairwell head does. What the plan actually draws is an L - flight x 4502..5374, y 4700..7660 plus landing x 4502..5698, y 7660..8550 = 3.645 m2 (+0.1%). This rectangle is 0.4% away from that, well inside the +-1.4% the 853x853 raster supports, so the two are not distinguishable by measurement; the rectangle is kept because reshaping would drag A_SO2, A_W8 and T10's connectivity check with it. The box east of the flight at the north end IS floor - floor tone 236 against the Pustka's void tone 197, and the stair's walking line originates inside it, so it is the part of the bottom landing east of the flight and not a post or furniture (see A_W8) - but adding that ~0.23 m2 to THIS rectangle would over-read to +6.8%. It is admissible only together with narrowing the flight from 950 to 872 mm, and those two corrections cancel; that cancellation is why the old rectangle scored -1.1%. See docs/T18-findings.md item 1."
+    }
+  ],
+  "dimension_chains": [
+    {
+      "id": "A_C1",
+      "level": "attic",
+      "axis": "x",
+      "extent": "overall_x",
+      "segments_cm": [
+        45,
+        393,
+        12,
+        700,
+        12,
+        503,
+        45
+      ],
+      "total_cm": 1710,
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "segments_cm",
+        "total_cm"
+      ],
+      "note": "Full east-west decomposition of the attic. 393, 700 and 503 are PRINTED on plan_attic.png (the three room widths). 45 is the exterior wall, derived from the printed 810 interior depth and the printed 900 overall depth, (900-810)/2. 12 is the partition, derived as the residual (1620 - 393 - 700 - 503)/2. The 1710 total is not printed on plan_attic.png - it is the building length printed on plan_ground.png (chain A_C2) and site.png - but the attic outline measures 701.0 px = 17.10 m at 40.99 px/m, so it is the same run. Marked derived on both fields for that reason; the closure check is still meaningful because it pins the partition thickness."
+    },
+    {
+      "id": "A_C2",
+      "level": "attic",
+      "axis": "x",
+      "extent": "overall_x",
+      "segments_cm": [
+        470,
+        224,
+        1016
+      ],
+      "total_cm": 1710,
+      "source_image": "data/source/plan_ground.png",
+      "note": "The building's printed overall length chain, read directly off the bottom margin of plan_ground.png (segments 470 / 224 / 1016 above a separately printed 1710). plan_attic.png prints NO margin chains at all, so this is transcribed here to give A_C1 a partner on extent 'overall_x': the attic's own room-width decomposition then has to reproduce a number it did not come from. The building outline is common to both storeys and the attic plan draws the same 17.10 m rectangle. T04 owns the ground-level copy of this same printed chain; the two are deliberately independent transcriptions."
+    },
+    {
+      "id": "A_C3",
+      "level": "attic",
+      "axis": "y",
+      "extent": "overall_y",
+      "segments_cm": [
+        45,
+        810,
+        45
+      ],
+      "total_cm": 900,
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "segments_cm",
+        "total_cm"
+      ],
+      "note": "North-south decomposition of the attic. 810 is PRINTED on plan_attic.png (interior clear depth, measured 331.0 px = 40.86 px/m). 45 is the exterior wall and 900 the overall depth; both come from the printed 900 on plan_ground.png/site.png (chain A_C4), so both are marked derived here. This chain is what forces the exterior wall to a 450 mm STRUCTURAL centreline; spec/meta.json's 460 mm is the FINISHED thickness and is measured to a different face, so the two do not conflict - see A_W1's note."
+    },
+    {
+      "id": "A_C4",
+      "level": "attic",
+      "axis": "y",
+      "extent": "overall_y",
+      "segments_cm": [
+        820,
+        80
+      ],
+      "total_cm": 900,
+      "source_image": "data/source/plan_ground.png",
+      "note": "The building's printed overall depth chain, read off the left margin of plan_ground.png: an inner run 820 + 80 against a separately printed outer 900. Transcribed here for the same reason as A_C2 - to give A_C3 a partner on extent 'overall_y'. The 820/80 split is a ground-floor feature and is not reproduced in the attic; only the 900 total is shared."
+    },
+    {
+      "id": "A_C5",
+      "level": "attic",
+      "axis": "y",
+      "extent": "interior_y",
+      "segments_cm": [
+        425,
+        385
+      ],
+      "total_cm": 810,
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "segments_cm"
+      ],
+      "note": "The interior clear depth split at the Antresola's north edge. 425 (Antresola depth, south wall face to the void edge) and 810 (interior clear depth) are both PRINTED on plan_attic.png; 385 is the residual depth of the 'Pustka nad salonem' / stairwell and is derived as 810 - 425. Closure therefore only checks that the printed 425 fits the printed 810, but the traced void-edge line at plan row 346.0 independently lands at 4708 mm against the 4700 mm this chain implies."
+    },
+    {
+      "id": "A_C6",
+      "level": "attic",
+      "axis": "y",
+      "extent": "interior_y",
+      "segments_cm": [
+        159,
+        114,
+        264,
+        114,
+        159
+      ],
+      "total_cm": 810,
+      "source_image": "data/source/plan_attic.png",
+      "derived_fields": [
+        "segments_cm"
+      ],
+      "note": "THE CEILING-HEIGHT BANDING CONTOURS, as a closure-checked chain across the interior depth, south to north: 159 below 1.40 m | 114 between 1.40 and 2.20 m | 264 above 2.20 m | 114 between | 159 below. Traced directly off the three flat grey tones of plan_attic.png on eight independent columns, sub-pixel; see this file's _comment for the raw rows. In millimetres: d140 = 1589, d220 = 2732, so in the shared frame the contours sit at y = 2039, 3182, 5818, 6961 with the ridge at y = 4500. Segments are marked derived because they are MEASURED, not printed - the plan prints only the labels '140' and '220' against the lines, not their distances. The 810 total IS printed, so the chain is a real check: it asserts the trace is symmetric about the ridge and fills the printed span (it does, to 2 mm). Cross-checks: these values reproduce T17's d140 = 1.589 m / d220 = 2.726 m to 0 mm and 6 mm; inverted they give pitch 34.97 deg and a 286 mm knee wall against the published 35.0 deg and 290 mm; and the PN-ISO 9836 counted depth they imply, 2636 + 0.5*2286 = 3779 mm, reproduces both published Strych ocieplony areas to within 0.2%."
+    }
+  ],
+  "slab_openings": [
+    {
+      "id": "A_SO1",
+      "level": "attic",
+      "bounds": [
+        5550,
+        4760,
+        11500,
+        8550
+      ],
+      "kind": "void",
+      "source_image": "data/source/plan_attic.png",
+      "derived": true,
+      "note": "'Pustka nad salonem' - the double-height void over the living room, labelled on plan_attic.png. Bounds derived: T10's union-equals-footprint check left an unexplained 22.5505 m2 residual on the attic and traced the residual polygon to exactly these bounds; 5950 x 3790 = 22.5505 m2 reproduces it. Corroborated by A_R1's own note ('the north part of this middle bay is the double-height void over the living room and is NOT floor') and by A_W7, the 60 mm balustrade, which runs along this void's boundary. Not dimensioned on any plan, hence derived."
+    },
+    {
+      "id": "A_SO2",
+      "level": "attic",
+      "bounds": [
+        4500,
+        4700,
+        5450,
+        8550
+      ],
+      "kind": "stairwell",
+      "connects_levels": [
+        "ground",
+        "attic"
+      ],
+      "source_image": "data/source/plan_attic.png",
+      "derived": true,
+      "note": "Stairwell opening in the attic floor slab, coincident with room A_R4 (Schody). Bounds taken from A_R4's own polygon; 950 x 3850 = 3.6575 m2, against the published 3.64 m2 (+0.5%). The south edge moved 4760 -> 4700 in T19 with A_R4's: 4700 is the PRINTED slab edge (chain A_C5, 450 + 4250) and the 60 mm guard A_W7 stands on the void side of it, so the slab is absent under the guard here and A_R4's plan projection runs to 4700. Before T19 these bounds were 950 x 3790 = 3.6005, the raw structure area of the old polygon; that agreement was cited as corroboration of the -1.1% reading and it is the same fact seen from the other side - the published figure is the drawn OPENING measured at structure, which is exactly why A_R4 takes no finish allowance. See A_R4's note and docs/T18-findings.md item 1. Separated from the A_SO1 void by the 100 mm balustrade A_W8 at x 5450..5550; A_SO1 keeps its own south edge at 4760, because its bounds were derived independently from T10's 22.5505 m2 residual and nothing re-measured them. connects_levels lets the connectivity check traverse storeys - without it A_R4 has no door openings at all and the whole attic reads as unreachable."
+    }
+  ]
+}

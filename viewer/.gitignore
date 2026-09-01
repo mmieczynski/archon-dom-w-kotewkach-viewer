@@ -1,0 +1,4 @@
+# The viewer is a zero-build static app; nothing here is generated.
+# Kept only in case someone runs npm in this directory while re-vendoring three.js.
+node_modules/
+package-lock.json

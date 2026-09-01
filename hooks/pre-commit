@@ -1,0 +1,100 @@
+#!/bin/sh
+# Pre-commit hook for dom-w-kotewkach-3d.  Install with: just install-hooks
+#
+# WHY THIS EXISTS
+# ---------------
+# The repository is local only (user decision, 2026-08-31): no remote, no GitHub Actions,
+# because data/source/ holds Archon's copyrighted plan bitmaps and publishing the repo
+# would redistribute them.  This hook is half of the local replacement for CI -- it makes
+# "the model is verified" something a machine re-checks on every commit rather than
+# something someone remembers having checked once.  `just check` is the other half.
+#
+# WHY ONLY THE FAST VALIDATORS
+# ----------------------------
+# It runs `just validate` -- schema, published-data reconciliation, chain closure, the
+# geometry kernel, topology and room areas -- and NOT the full suite.  That is a deliberate
+# trade: the fast subset finishes in about two seconds, while the full suite needs the 3D
+# generator, the glTF export and the overlay raster.  A hook slow enough to be annoying
+# gets bypassed with --no-verify, and a bypassed hook guards nothing.  The subset still
+# contains the checksum: every published room area and every printed dimension chain.
+#
+# Run `just check` before you consider a change finished.  The hook is a tripwire, not a
+# substitute for it.
+#
+# TWO HONEST CAVEATS
+# ------------------
+# 1. This validates the WORKING TREE, not the staged index.  If you stage only some of your
+#    changes, what is checked is not exactly what is committed.  Stashing the unstaged
+#    remainder would fix that and would also risk eating uncommitted work on any hook error,
+#    which is a worse failure than the one it prevents.
+# 2. It skips entirely when a commit touches no spec, source, test or data file -- editing
+#    README.md cannot break a validator.  See RELEVANT below for exactly what counts.
+
+set -eu
+
+# Paths whose contents can change a validator's verdict.  A commit touching none of these
+# is not checked.
+RELEVANT='^(spec/|src/|tests/|data/|pyproject\.toml$|uv\.lock$|justfile$|hooks/)'
+
+root=$(git rev-parse --show-toplevel)
+cd "$root"
+
+staged=$(git diff --cached --name-only --diff-filter=ACMR | grep -E "$RELEVANT" || true)
+if [ -z "$staged" ]; then
+    echo "pre-commit: no spec/src/tests/data changes staged; validators skipped."
+    exit 0
+fi
+
+echo "pre-commit: running the fast validators (just validate)..."
+
+if command -v just >/dev/null 2>&1; then
+    run() { just validate; }
+elif command -v uv >/dev/null 2>&1; then
+    # Fallback so the guarantee does not depend on `just` being on PATH.  Keep this list
+    # in step with FAST in the justfile.
+    run() {
+        uv run pytest -x -q \
+            tests/test_schema.py \
+            tests/test_published.py \
+            tests/test_chains.py \
+            tests/test_geometry.py \
+            tests/test_topology.py \
+            tests/test_room_areas.py
+    }
+else
+    echo "pre-commit: neither 'just' nor 'uv' is on PATH, so the validators cannot run." >&2
+    echo "            Install one (see README) -- this hook fails rather than waving the" >&2
+    echo "            commit through, because a hook that silently passes guards nothing." >&2
+    exit 1
+fi
+
+# Quiet on success, complete on failure. The validators emit deliberate diagnostic
+# warnings (residuals, overshoots, cross-chain coverage) that are useful in the inner loop
+# and are noise in a hook -- and a noisy hook is one nobody reads.
+log=$(mktemp "${TMPDIR:-/tmp}/kotewki-precommit.XXXXXX")
+trap 'rm -f "$log"' EXIT INT TERM
+
+if run >"$log" 2>&1; then
+    tail -n 1 "$log"
+    echo "pre-commit: validators pass. (Run 'just check' for the full suite.)"
+    exit 0
+fi
+
+cat "$log" >&2
+
+cat >&2 <<'MESSAGE'
+
+pre-commit: VALIDATORS FAILED -- commit refused.
+
+A failing validator is a finding, not an obstacle.  Read the failure: it names the room,
+the chain or the invariant that disagrees, and the fix is almost always in spec/, not in
+the test.  Do not widen a tolerance to get past this.
+
+  just validate        rerun, same checks
+  just validate -v     the full failure tables
+  just check           ruff + the whole suite, including the 3D and overlay checks
+
+If you genuinely need to commit work in progress, `git commit --no-verify` bypasses this.
+It is recorded here so that using it is a decision rather than a discovery.
+MESSAGE
+exit 1

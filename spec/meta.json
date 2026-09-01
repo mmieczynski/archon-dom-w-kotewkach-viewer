@@ -1,0 +1,177 @@
+{
+  "_comment": "OWNED BY T02. Levels, construction, section level marks and roof inputs. Do not add walls/openings/rooms/dimension_chains here - those belong in spec/ground.json (T04) and spec/attic.json (T05). Validated as part of the merged document against spec/schema.json; read the schema's top-level description before editing, especially the units contract.",
+  "meta": {
+    "schema_version": "1.0.0",
+    "project": "Dom w Kotewkach 6 (E)",
+    "source_url": "https://www.archon.pl/projekty-domow/projekt-dom-w-kotewkach-6-e-m3fd297061d375",
+    "variant": "E",
+    "transcribed_by": "T02",
+    "date": "2026-08-30",
+    "note": "Figures taken from README.md and data/published.json (T03), which transcribe the Archon project card and data/source/section.png. Lengths converted to integer millimetres; the published metre values are preserved verbatim in data/published.json."
+  },
+  "levels": [
+    {
+      "id": "ground",
+      "name": "PARTER",
+      "elevation": 0,
+      "ceiling_height": 2700,
+      "source_image": "data/source/section.png",
+      "derived": false,
+      "note": "Elevation is the +-0.00 datum by definition. Clear height 2.70 m printed on the section."
+    },
+    {
+      "id": "attic",
+      "name": "PODDASZE",
+      "elevation": 3040,
+      "ceiling_height": 2730,
+      "source_image": "data/source/section.png",
+      "derived": false,
+      "note": "Both values printed on the section: attic finished floor +3.04 m, clear height 2.73 m. The 2.73 m is the clear height at the ridge/collar zone; the sloped part of the attic is governed by the 1.4 m / 2.2 m banding contours traced in T05, not by this figure."
+    }
+  ],
+  "section_elevations": {
+    "_comment": "ASSERTION TARGETS, NOT GENERATOR INPUTS. `ridge` in particular must never be fed into the roof construction - see T09/T11.",
+    "terrain": -320,
+    "ground_floor": 0,
+    "attic_floor": 3040,
+    "ridge": 6770,
+    "source_image": "data/source/section.png",
+    "derived": false,
+    "note": "All five marks printed on data/source/section.png and re-transcribed in data/published.json:section_levels_m. Internal consistency: ridge - terrain = 6770 - (-320) = 7090 mm = the published 7.09 m building height, exactly. NOTE the +2.88 mark was originally mislabelled 'eave_wall_top'. T17 established it is the EAVE FASCIA UNDERSIDE at the outer edge of the 600 mm overhang - it is not in the wall chain at all, which is why 3040 - 2880 = 160 never reconciled with the 340 mm ceiling slab. The slab was measured directly at 344 mm with its soffit at +2.684 (printed clear height 2700). See docs/roof-resolution.md.",
+    "eave_fascia_underside": 2880
+  },
+  "construction": {
+    "_comment": "From the publisher's spec sheet (data/published.json:construction).",
+    "exterior_wall": {
+      "thickness": 460,
+      "layers": [
+        {
+          "material": "Porotherm 25 (pustak ceramiczny)",
+          "thickness": 250,
+          "note": "Published: 'Porotherm 25 cm'."
+        },
+        {
+          "material": "Termo Organika EPS (styropian)",
+          "thickness": 200,
+          "note": "Published: 'EPS 20 cm'."
+        },
+        {
+          "material": "tynk cienkowarstwowy (elewacja)",
+          "thickness": 10,
+          "derived": true,
+          "note": "Render thickness is NOT published. T04 solved it against the published pow. zabudowy 154.42 m2, which Archon defines w stanie wykonczonym (PN-ISO 9836): (17.100 + 2t)(9.000 + 2t) = 154.42 gives t = 9.95 mm -> 10 mm/face, reproducing 154.4224 m2. 15 mm gives 154.68 and 20 mm gives 154.95, both too large. So the FINISHED exterior wall is 460 mm. The STRUCTURAL centreline thickness stays 450 mm (Porotherm 250 + EPS 200) and is what walls are built at - this render sits outboard of the dimensioned outline."
+        }
+      ],
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "FINISHED thickness 460 mm = 250 Porotherm + 200 EPS + 10 mm exterior render, inside face to outside face. STRUCTURAL centreline thickness is 450 mm (250 + 200) and is what T04/T05 placed walls at; the render sits OUTBOARD of the 17100 x 9000 structural outline the chains dimension. Only the two structural layers are published, so the total is derived. CORRECTED: this note previously opened '250 + 200 + 15 = 465 mm' and then contradicted itself with the 460 figure lower down. The render is 10 mm per face, not 15: T04 solved it against the published pow. zabudowy 154.42 m2, where 17.120 x 9.020 = 154.4224 m2 to four figures. Any note still citing 465 is stale. The interior finish is deliberately NOT a layer here: the ~20 mm per-face finish allowance that reconciles raw-structure chain dimensions to the published w-swietle-scian room areas is construction.finish_allowance, applied by the geometry kernel's measure_to parameter, not by thickening this wall. PN-ISO 9836 measures pow. zabudowy on the building 'w stanie wykonczonym', which is why the finished figure is the one that matches."
+    },
+    "ceiling": {
+      "thickness": 340,
+      "layers": [
+        {
+          "material": "płyta żelbetowa (strop)",
+          "thickness": 240
+        },
+        {
+          "material": "warstwy podłogowe poddasza (wylewka + izolacja)",
+          "thickness": 100
+        }
+      ],
+      "derived": true,
+      "note": "Archon publishes only the material ('plyta zelbetowa'), no thicknesses. Total 340 mm is arithmetic from two printed section values: attic finished floor +3.04 m minus ground-floor clear height 2.70 m. The 240/100 split between slab and floor build-up is a plausible assumption and is NOT published - it affects cubature (T09) only through the total, which is fixed, so the split is cosmetic."
+    },
+    "knee_wall_height": 290,
+    "finish_allowance": 20,
+    "roof_covering": "blacha dachówkowa / dachówka ceramiczna",
+    "roof_structure": "więźba drewniana, dach dwuspadowy",
+    "ventilation": "mechaniczna z odzyskiem ciepła (rekuperacja)",
+    "derived_fields": [
+      "finish_allowance"
+    ],
+    "note": "knee_wall_height 290 mm is printed on the spec sheet ('sciana kolankowa 29 cm') and is transcribed, not derived. finish_allowance 20 mm per face IS derived: it is the value that reconciles the printed raw-structure chains to the published w-swietle-scian areas to within 0.05% on the two rooms checked so far (Pokoj 380x323 -> 11.994 vs published 11.99; Lazienka 260x140 -> 3.482 vs published 3.48). T15 confirms or corrects it across all 14 ground-floor rooms; until then treat any uniform area offset in T08 as a finish-allowance question, not a geometry bug."
+  },
+  "roof": {
+    "type": "gable",
+    "pitch_deg": 35.0,
+    "eaves_overhang": 600,
+    "verge_overhang": 590,
+    "ridge_axis": "x",
+    "springing": "knee_wall_top",
+    "derived_fields": [
+      "eaves_overhang",
+      "verge_overhang",
+      "ridge_axis",
+      "springing",
+      "roof_buildup_vertical",
+      "fascia_depth"
+    ],
+    "source_image": "data/source/section.png",
+    "note": "RESOLVED by T17 (docs/roof-resolution.md). The published 35 deg is CORRECT and is confirmed four independent ways: the section's drawn roof line fits a straight line at 35.003 deg (0.06 px RMS over 81 rows - it is a vector render); the attic 140/220 banding contours give 35.13 +/- 0.6 deg; the banded attic areas give 34.3-34.5 deg; three clean gable-render branches give 34.92/34.95/34.99 deg. Nothing measures near 40.7 deg. The earlier apparent discrepancy was a LABELLING error on our side, not an error in Archon's data: section mark +2.88 is the EAVE (fascia underside at the outer edge of the overhang), not the wall-plate top. The real vertical chain is 0.00 -> 2.70 clear -> 3.04 attic finished floor (slab measured 344 mm) -> 3.33 knee wall top -> 3.619 roof plane at the wall face -> ridge +6.770. Decomposition of the old 0.73 m 'gap': 0.61*tan35 = 0.427 m of overhang drop plus 0.310 m roof build-up = 0.737 m. eaves_overhang 600 mm: section gives 636/632 mm, attic plan 611 mm. verge_overhang 590 mm from the attic plan. roof_buildup_vertical 280 mm is the vertical knee-top-to-roof-plane offset (the springing input, the ONLY derived value in the ridge chain); fascia_depth 310 mm is the separate roof-plane-to-fascia-underside drop used only for the eave check. These two are NOT the same number - conflating them is what produced the original phantom discrepancy. Internal layer split of the build-up is undetermined. springing 'knee_wall_top' = attic floor 3040 + knee wall 290 = 3330, which T17 measured independently at 3342. DO NOT feed section_elevations.ridge into roof construction. Build the roof from pitch + span + attic floor + knee wall + build-up; the ridge then lands within 9 mm of the printed +6.77 and the building height within 9 mm of 7.09, which keeps both as genuine independent checks (see T09, T11). Reconstruction, nothing forced: springing = 3040 + 290 + 280 = 3610; ridge = 3610 + 4500*tan35 = 6761 (printed 6770, -9 mm); building height = 6761 + 320 = 7081 (published 7090, -9 mm); eave = 3610 - 600*tan35 - 310 = 2880 (printed 2880, 0 mm).",
+    "roof_buildup_vertical": 280,
+    "fascia_depth": 310
+  },
+  "roof_openings": [
+    {
+      "id": "R_RW1",
+      "kind": "roof_window",
+      "slope": "south",
+      "bounds": [
+        6574,
+        1149,
+        7354,
+        2446
+      ],
+      "width": 780,
+      "height_on_slope": 1600,
+      "source_image": "data/source/plan_attic.png",
+      "derived": true,
+      "derived_fields": [
+        "bounds",
+        "height_on_slope"
+      ],
+      "note": "Three roof windows in the SOUTH slope over the Antresola, callout 78/160 cm. Traced from plan_attic.png: centres x = 6964 / 7855 / 8733, width 780, plan-projected extent y = 1149..2446, depth 1296 +- 12 mm. RE-MEASURED IN T18; the earlier 1162..2433 / depth 1271 was a one-pixel edge-convention error, measured to the INNER faces of the two dashed lines instead of their centres. Line centre to line centre the box runs row 439.0 +- 0.3 to row 492.0 +- 0.3, i.e. 53.0 +- 0.5 px at SY = 0.0408889 px/mm. Against 1600 * cos35 = 1310.6 mm the residual is now 14.6 mm / 1.1% / 0.6 px, which is below what this raster can resolve: one pixel is 24.46 mm, so 1296 and 1310.6 AGREE - T18 does not claim to have distinguished them, only that 1271 does not belong. The method is calibrated in place on this very object: the same box measured the same way in x gives 413.0 - 381.0 = 32.0 px = 781.7 mm against the PRINTED 780 callout, +1.7 mm / 0.07 px. Implied on-slope height 1296 / cos35 = 1582 +- 15 against the printed 1600, -1.1%; the alternative the old note floated, 'the on-slope height is nearer 1552 mm', is 1.6 px from the ink and is NOT supported. height_on_slope records the PRINTED 1600; the generator models the measured projection, asserts the identity at 5%, and publishes implied_height_on_slope_m in scene metadata so the residual stays visible. See docs/T18-findings.md item 2."
+    },
+    {
+      "id": "R_RW2",
+      "kind": "roof_window",
+      "slope": "south",
+      "bounds": [
+        7465,
+        1149,
+        8245,
+        2446
+      ],
+      "width": 780,
+      "height_on_slope": 1600,
+      "source_image": "data/source/plan_attic.png",
+      "derived": true,
+      "derived_fields": [
+        "bounds",
+        "height_on_slope"
+      ],
+      "note": "Three roof windows in the SOUTH slope over the Antresola, callout 78/160 cm. Traced from plan_attic.png: centres x = 6964 / 7855 / 8733, width 780, plan-projected extent y = 1149..2446, depth 1296 +- 12 mm. RE-MEASURED IN T18; the earlier 1162..2433 / depth 1271 was a one-pixel edge-convention error, measured to the INNER faces of the two dashed lines instead of their centres. Line centre to line centre the box runs row 439.0 +- 0.3 to row 492.0 +- 0.3, i.e. 53.0 +- 0.5 px at SY = 0.0408889 px/mm. Against 1600 * cos35 = 1310.6 mm the residual is now 14.6 mm / 1.1% / 0.6 px, which is below what this raster can resolve: one pixel is 24.46 mm, so 1296 and 1310.6 AGREE - T18 does not claim to have distinguished them, only that 1271 does not belong. The method is calibrated in place on this very object: the same box measured the same way in x gives 413.0 - 381.0 = 32.0 px = 781.7 mm against the PRINTED 780 callout, +1.7 mm / 0.07 px. Implied on-slope height 1296 / cos35 = 1582 +- 15 against the printed 1600, -1.1%; the alternative the old note floated, 'the on-slope height is nearer 1552 mm', is 1.6 px from the ink and is NOT supported. height_on_slope records the PRINTED 1600; the generator models the measured projection, asserts the identity at 5%, and publishes implied_height_on_slope_m in scene metadata so the residual stays visible. See docs/T18-findings.md item 2."
+    },
+    {
+      "id": "R_RW3",
+      "kind": "roof_window",
+      "slope": "south",
+      "bounds": [
+        8343,
+        1149,
+        9123,
+        2446
+      ],
+      "width": 780,
+      "height_on_slope": 1600,
+      "source_image": "data/source/plan_attic.png",
+      "derived": true,
+      "derived_fields": [
+        "bounds",
+        "height_on_slope"
+      ],
+      "note": "Three roof windows in the SOUTH slope over the Antresola, callout 78/160 cm. Traced from plan_attic.png: centres x = 6964 / 7855 / 8733, width 780, plan-projected extent y = 1149..2446, depth 1296 +- 12 mm. RE-MEASURED IN T18; the earlier 1162..2433 / depth 1271 was a one-pixel edge-convention error, measured to the INNER faces of the two dashed lines instead of their centres. Line centre to line centre the box runs row 439.0 +- 0.3 to row 492.0 +- 0.3, i.e. 53.0 +- 0.5 px at SY = 0.0408889 px/mm. Against 1600 * cos35 = 1310.6 mm the residual is now 14.6 mm / 1.1% / 0.6 px, which is below what this raster can resolve: one pixel is 24.46 mm, so 1296 and 1310.6 AGREE - T18 does not claim to have distinguished them, only that 1271 does not belong. The method is calibrated in place on this very object: the same box measured the same way in x gives 413.0 - 381.0 = 32.0 px = 781.7 mm against the PRINTED 780 callout, +1.7 mm / 0.07 px. Implied on-slope height 1296 / cos35 = 1582 +- 15 against the printed 1600, -1.1%; the alternative the old note floated, 'the on-slope height is nearer 1552 mm', is 1.6 px from the ink and is NOT supported. height_on_slope records the PRINTED 1600; the generator models the measured projection, asserts the identity at 5%, and publishes implied_height_on_slope_m in scene metadata so the residual stays visible. See docs/T18-findings.md item 2."
+    }
+  ]
+}

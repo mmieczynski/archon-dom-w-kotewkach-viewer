@@ -1,0 +1,1412 @@
+{
+  "_comment": "OWNED BY T04 - ground floor (PARTER). Transcribed from data/source/plan_ground.png (853x853) with data/source/plan_ground_areas.png for the room names/areas and data/source/elevation_garden.png for the north glazing sills. SHARED coordinate frame, identical to spec/attic.json: origin at the building's outer south-west corner, +x east, +y north, integer millimetres. Building outline 17100 x 9000 to raw structure, exterior wall 450 mm, interior clear 16200 x 8100 - the same numbers T05 established for the attic, and the ground plan reproduces them independently (see G_C2/G_C3/G_C5). IMAGE-TO-FRAME MAP used for every pixel cross-check quoted below: the drawn structural outline occupies plan columns 69.0..769.0 and rows 215.0..583.0, so x_mm = (col - 69.0) * 24.4286 and y_mm = (583.0 - row) * 24.4565; 1 px = 24 mm. THE OUTLINE IS NOT A PURE RECTANGLE: the south facade is recessed 800 mm deep over a 2240 mm width for the entrance (walls G_W2/G_W3/G_W4), and that recess is exactly what the two printed margin chains dimension - the bottom chain's middle segment 224 is the recess opening (plan cols 261.4..353.1) and the left chain's 80 is its depth (the recessed wall's south face sits at plan row 550.0 = y 807). Both chains close on that reading and on no other. THE 0.52 m2 FOOTPRINT RESIDUAL IS SETTLED AND THE RECESS IS NOT THE ANSWER: the recess makes the ground floor's enclosed area 17.10 x 9.00 - 2.24 x 0.80 = 152.11 m2, i.e. it moves AWAY from the published 154.42, and it does not count against pow. zabudowy because the storey above is a full rectangle (T05) and the roof covers it. What reproduces 154.42 is the finished outline: solving (17.100 + 2t)(9.000 + 2t) = 154.42 gives t = 9.95 mm, i.e. 17.12 x 9.02 = 154.4224 m2. So the published figure is measured to finished faces with a ~10 mm render per face - which is exactly what Archon's own definition says ('powierzchnia terenu zajeta przez budynek W STANIE WYKONCZONYM', PN-ISO 9836, quoted in data/published.json). 15 mm per face would give 154.68 and 20 mm 154.95, so 465 mm as a FINISHED wall thickness is 5 mm too thick against this figure; 460 mm fits it. None of that changes the structural 450 used here. PARTITION THICKNESSES were not read off hatching (the plan draws no hatch); they are forced by chain closure and confirmed to +/-1 px on the drawing: 250 mm once (G_W9, 10 px), 170 mm once (G_W19, 7 px), 120 mm everywhere else (5 px). The 20 mm/face finish allowance is NOT baked into anything here - every length below is raw structure, per README.",
+  "walls": [
+    {
+      "id": "G_W1",
+      "level": "ground",
+      "start": [
+        225,
+        225
+      ],
+      "end": [
+        4475,
+        225
+      ],
+      "thickness": 450,
+      "type": "exterior",
+      "layers": [
+        {
+          "material": "Porotherm 25 (pustak ceramiczny)",
+          "thickness": 250
+        },
+        {
+          "material": "Termo Organika EPS (styropian)",
+          "thickness": 200
+        }
+      ],
+      "source_image": "data/source/plan_ground.png",
+      "note": "South facade, west run: x 0..4700, y 0..450. Ends at the west reveal of the entrance recess, whose outer face is the 470 tick of the printed bottom chain (470 | 224 | 1016 = 1710). Thickness 450 is NOT derived - it is forced by the printed 810 interior depth on plan_attic.png inside the printed 900 overall on plan_ground.png, (900-810)/2 = 45, and independently by this plan: the drawn wall is 18 px = 440 mm and the interior clear span between the west and east wall faces measures 663 px = 16193 mm against the 1620 required by 1710 - 2 x 45. NB spec/meta.json's construction.exterior_wall.thickness = 465 includes a 15 mm render that sits OUTBOARD of the dimensioned 17100 x 9000 outline; 450 is the structural centreline thickness to build at, 465 the finished thickness. T05 placed the attic walls at 450 and this file matches."
+    },
+    {
+      "id": "G_W2",
+      "level": "ground",
+      "start": [
+        4475,
+        225
+      ],
+      "end": [
+        4475,
+        1025
+      ],
+      "thickness": 450,
+      "type": "exterior",
+      "layers": [
+        {
+          "material": "Porotherm 25 (pustak ceramiczny)",
+          "thickness": 250
+        },
+        {
+          "material": "Termo Organika EPS (styropian)",
+          "thickness": 200
+        }
+      ],
+      "source_image": "data/source/plan_ground.png",
+      "note": "West reveal of the recessed entrance: masonry x 4250..4700, running north from the south facade to the recessed wall. Traced at plan cols 243..260, rows 552..565 (18 px = 440 mm). Its east face at x = 4700 is the printed 470 tick of the bottom chain."
+    },
+    {
+      "id": "G_W3",
+      "level": "ground",
+      "start": [
+        4475,
+        1025
+      ],
+      "end": [
+        7165,
+        1025
+      ],
+      "thickness": 450,
+      "type": "exterior",
+      "layers": [
+        {
+          "material": "Porotherm 25 (pustak ceramiczny)",
+          "thickness": 250
+        },
+        {
+          "material": "Termo Organika EPS (styropian)",
+          "thickness": 200
+        }
+      ],
+      "source_image": "data/source/plan_ground.png",
+      "note": "The recessed south wall of the Wiatrolap: masonry y 800..1250, set back 800 mm from the south facade. Traced at plan rows 532..550 (18 px) - its south face at row 550.0 converts to y = 807 mm against the 800 that the printed left-margin chain 820 + 80 = 900 requires. This wall carries the entrance door (G_O5, tag 160/210). The 800 mm recess over the 2240 mm opening is the ONLY departure of the ground-floor outline from the 17100 x 9000 rectangle."
+    },
+    {
+      "id": "G_W4",
+      "level": "ground",
+      "start": [
+        7165,
+        1025
+      ],
+      "end": [
+        7165,
+        225
+      ],
+      "thickness": 450,
+      "type": "exterior",
+      "layers": [
+        {
+          "material": "Porotherm 25 (pustak ceramiczny)",
+          "thickness": 250
+        },
+        {
+          "material": "Termo Organika EPS (styropian)",
+          "thickness": 200
+        }
+      ],
+      "source_image": "data/source/plan_ground.png",
+      "note": "East reveal of the recessed entrance: masonry x 6940..7390. Traced at plan cols 353..371, rows 550..583. Its west face at x = 6940 is the 470 + 224 = 694 tick of the printed bottom chain, so the recess opening is exactly the chain's middle segment 224."
+    },
+    {
+      "id": "G_W5",
+      "level": "ground",
+      "start": [
+        7165,
+        225
+      ],
+      "end": [
+        16875,
+        225
+      ],
+      "thickness": 450,
+      "type": "exterior",
+      "layers": [
+        {
+          "material": "Porotherm 25 (pustak ceramiczny)",
+          "thickness": 250
+        },
+        {
+          "material": "Termo Organika EPS (styropian)",
+          "thickness": 200
+        }
+      ],
+      "source_image": "data/source/plan_ground.png",
+      "note": "South facade, east run: x 6940..17100, y 0..450. Length 1016 cm = the third segment of the printed bottom chain. Carries three printed openings (220/140 to the Kuchnia, 90/140 to the Lazienka, 90/140 to the Kotlownia)."
+    },
+    {
+      "id": "G_W6",
+      "level": "ground",
+      "start": [
+        16875,
+        225
+      ],
+      "end": [
+        16875,
+        8775
+      ],
+      "thickness": 450,
+      "type": "exterior",
+      "layers": [
+        {
+          "material": "Porotherm 25 (pustak ceramiczny)",
+          "thickness": 250
+        },
+        {
+          "material": "Termo Organika EPS (styropian)",
+          "thickness": 200
+        }
+      ],
+      "source_image": "data/source/plan_ground.png",
+      "note": "East gable wall. Continuous masonry at plan cols 750..768 rows 215..525 and 563..582; the single break, rows 526..562, is the printed 90/230 external door to the Kotlownia (G_O9). Runs south-to-north so its start node is shared with G_W5."
+    },
+    {
+      "id": "G_W7",
+      "level": "ground",
+      "start": [
+        16875,
+        8775
+      ],
+      "end": [
+        225,
+        8775
+      ],
+      "thickness": 450,
+      "type": "exterior",
+      "layers": [
+        {
+          "material": "Porotherm 25 (pustak ceramiczny)",
+          "thickness": 250
+        },
+        {
+          "material": "Termo Organika EPS (styropian)",
+          "thickness": 200
+        }
+      ],
+      "source_image": "data/source/plan_ground.png",
+      "note": "North (garden) facade. Three printed openings, all full-height glazing: 180/230, 420/230, 180/230. Runs east-to-west, so opening offsets are measured from the north-east corner westwards."
+    },
+    {
+      "id": "G_W8",
+      "level": "ground",
+      "start": [
+        225,
+        8775
+      ],
+      "end": [
+        225,
+        225
+      ],
+      "thickness": 450,
+      "type": "exterior",
+      "layers": [
+        {
+          "material": "Porotherm 25 (pustak ceramiczny)",
+          "thickness": 250
+        },
+        {
+          "material": "Termo Organika EPS (styropian)",
+          "thickness": 200
+        }
+      ],
+      "source_image": "data/source/plan_ground.png",
+      "note": "West gable wall. Unbroken masonry at plan cols 69..86 for the full rows 215..582 - there is no opening anywhere in the west wall."
+    },
+    {
+      "id": "G_W9",
+      "level": "ground",
+      "start": [
+        4375,
+        5260
+      ],
+      "end": [
+        4375,
+        8775
+      ],
+      "thickness": 250,
+      "type": "structural",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Wall between Pokoj (5) and the stair / Salon bay, masonry x 4250..4500. Position is PRINTED on both sides: the 380 room width puts its west face at 450 + 3800 = 4250, and the 700 Salon width puts its east face at 11500 - 7000 = 4500. Thickness 250 is therefore not free - it is the residual that makes the upper x chain close (chain G_C2, 45+380+25+700+12+171+12+320+45 = 1710) - and it is confirmed by the drawing, which renders this wall 10 px = 244 mm where every other partition renders 5 px = 122 mm. Marked derived because 25 is not printed as a number. It is the only 250 mm internal wall on the level and it is the one carrying the staircase."
+    },
+    {
+      "id": "G_W10",
+      "level": "ground",
+      "start": [
+        4310,
+        1025
+      ],
+      "end": [
+        4310,
+        3740
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Partition between Pokoj (3) and Wiatrolap (1), masonry x 4250..4370. West face at 4250 from the printed 380; east face at 4370 from the printed 230 Wiatrolap width measured back from 6670. Thickness 120 is DERIVED as the residual of the lower x chain G_C3 and is drawn 5 px = 122 mm. Consistent with a Porotherm 11.5 partition plus plaster. No opening: plan cols 243..247 are unbroken from row 428 to row 551."
+    },
+    {
+      "id": "G_W11",
+      "level": "ground",
+      "start": [
+        6730,
+        1025
+      ],
+      "end": [
+        6730,
+        3740
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Partition between Wiatrolap (1) and Kuchnia (14), masonry x 6670..6790. Fixes both printed room widths at once: 4370 + 2300 = 6670 (the printed 230) and 6790 + 3650 = 10440 (the printed 365). Drawn 5 px, unbroken rows 428..550, so there is no direct door from the vestibule to the kitchen - the Wiatrolap opens only northwards into the Salon."
+    },
+    {
+      "id": "G_W12",
+      "level": "ground",
+      "start": [
+        3110,
+        3740
+      ],
+      "end": [
+        3110,
+        5260
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Partition between Lazienka (4) and Hol (2), masonry x 3050..3170. West face at 450 + 2600 = 3050 from the printed 260 Lazienka width. Drawn at plan cols 193..197, present rows 365..388 and 425..432 - the 36-row break between them is the door G_O13."
+    },
+    {
+      "id": "G_W13",
+      "level": "ground",
+      "start": [
+        225,
+        3740
+      ],
+      "end": [
+        6730,
+        3740
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "The long east-west partition at y 3680..3800 that forms the north wall of Pokoj (3), Hol (2) and Wiatrolap (1) and the south wall of Lazienka (4) / Salon (6). Its line is fixed three independent printed ways: 450 + 3230 = 3680 (Pokoj 3's printed 323), 1250 + 2430 = 3680 (Wiatrolap's printed 243) and 8550 - 4750 = 3800 (the Salon's printed 475). Drawn at plan rows 428..432, in three runs - cols 69..203, 241..289 and 327..346 - so the two breaks are real openings, not a broken transcription: G_O14 (into Pokoj 3) and G_O15 (Wiatrolap into the Salon)."
+    },
+    {
+      "id": "G_W14",
+      "level": "ground",
+      "start": [
+        225,
+        5260
+      ],
+      "end": [
+        4375,
+        5260
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Partition at y 5200..5320, north wall of Lazienka (4) and Hol (2), south wall of Pokoj (5). Fixed by two printed numbers meeting on it: 3800 + 1400 = 5200 (Lazienka's printed 140) and 8550 - 3230 = 5320 (Pokoj 5's printed 323). Drawn at plan rows 365..370 in two runs, cols 88..202 and 241..252; the break is the door G_O16."
+    },
+    {
+      "id": "G_W15",
+      "level": "ground",
+      "start": [
+        10500,
+        225
+      ],
+      "end": [
+        10500,
+        3340
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Partition between Kuchnia (14) and Spizarnia (13) / Lazienka (12), masonry x 10440..10560. West face at 6790 + 3650 = 10440 from the printed 365; east face at 11470 - 910 = 10560 from the printed 91. Drawn at plan cols 496..500, present rows 444..504 and 538..549 - the break rows 505..537 is the pantry door G_O17."
+    },
+    {
+      "id": "G_W16",
+      "level": "ground",
+      "start": [
+        11530,
+        225
+      ],
+      "end": [
+        11530,
+        2320
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Partition between Spizarnia (13) and Lazienka (12), masonry x 11470..11590. Fixed by 10560 + 910 = 11470 (printed 91) and 11590 + 1830 = 13420 (printed 183). Terminates on G_W17's centreline y = 2320; its masonry therefore stops at G_W17's north face 2380. CORRECTED: this wall previously ran to y = 2930 and its note claimed the ink was 'unbroken rows 462..564'. It is not. A column scan at cols 538..542 on plan_ground.png reads flat white 254 for every row from 455 to 482, a 128-grey thin line at 483 (the shower enclosure, not masonry), antialiasing at 485, and solid 0 only from row 486 down. Drawn top edge is row 485.5 -> y = 2384 +-12, i.e. G_W17's north face. The old endpoint pushed a 120 x 550 mm stub of wall north into the Lazienka's shower, which is what T13's overlay showed as a model-only (blue) rectangle at x 11481..11555, y 2397..2935. Found by human inspection of build/overlay_ground.png, not by any numeric check -- the stub is 0.066 m2 and was being absorbed as the Lazienka's -1.27% residual, which this project had wrongly written off as an irreducible publisher-vs-plan disagreement. NOTE the 30 mm jog against G_W23 above it: the upper x chain puts the corresponding wall at 11500..11620 and the lower at 11470..11590. Both are printed-number-driven and both chains close exactly at 1710, so the jog is transcribed rather than smoothed away."
+    },
+    {
+      "id": "G_W17",
+      "level": "ground",
+      "start": [
+        10500,
+        2320
+      ],
+      "end": [
+        11730,
+        2320
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "North wall of the Spizarnia (13), masonry y 2260..2380. South face at 450 + 1810 = 2260 from the printed 181. Drawn at plan rows 486..490, cols 496..549, unbroken - the pantry is entered only from the kitchen. This wall is what makes Lazienka (12) L-shaped: above it the bathroom wraps west over the pantry."
+    },
+    {
+      "id": "G_W18",
+      "level": "ground",
+      "start": [
+        10500,
+        3340
+      ],
+      "end": [
+        13505,
+        3340
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "North wall of Lazienka (12), masonry y 3280..3400. South face at 450 + 2830 = 3280 from the printed 283. Drawn at plan rows 444..448 in two runs, cols 496..552 and 589..622; the break is the door G_O18 from Hol (7)."
+    },
+    {
+      "id": "G_W19",
+      "level": "ground",
+      "start": [
+        13505,
+        225
+      ],
+      "end": [
+        13505,
+        2930
+      ],
+      "thickness": 170,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Wall between Lazienka (12) and Kotlownia (11), masonry x 13420..13590. THIS IS THE ONE 170 mm WALL ON THE LEVEL and it is not an arbitrary choice: the printed 183 puts its west face at 13420 and the printed 306 puts its east face at 16650 - 3060 = 13590, and 17 cm is exactly the residual that closes the lower x chain G_C3 at 1710. The drawing corroborates it - plan cols 618..624 render 7 px here against 5 px for every 120 mm partition and against the 5 px that the SAME column band renders further north (G_W21, rows 386..460), which is why the Pralnia reads 311 and the Kotlownia 306 across the same bay. Marked derived because 17 is not printed; a plausible physical reading is a 115 partition plus a boiler-room flue, but nothing on the plan states that."
+    },
+    {
+      "id": "G_W20",
+      "level": "ground",
+      "start": [
+        13505,
+        2930
+      ],
+      "end": [
+        16875,
+        2930
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "North wall of the Kotlownia (11), masonry y 2870..2990. South face at 450 + 2420 = 2870 from the printed 242, north face at 4700 - 1710 = 2990 from the printed 171. Drawn at plan rows 460..465, cols 625..657 and 697..748; the break is the door G_O19."
+    },
+    {
+      "id": "G_W21",
+      "level": "ground",
+      "start": [
+        13480,
+        2930
+      ],
+      "end": [
+        13480,
+        4760
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Partition between Hol (7) and Pralnia (10), masonry x 13420..13540. East face at 16650 - 3110 = 13540 from the printed 311. Drawn 5 px at plan cols 618..622, present rows 386..397 and 435..460 - the break rows 398..434 is the door G_O20. Note this wall is 120 while G_W19 directly below it in the same column band is 170; that 50 mm step is exactly the printed difference between the Pralnia's 311 and the Kotlownia's 306."
+    },
+    {
+      "id": "G_W22",
+      "level": "ground",
+      "start": [
+        11870,
+        4760
+      ],
+      "end": [
+        16875,
+        4760
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Wall at y 4700..4820: north wall of Hol (7) and Pralnia (10), south wall of Pokoj (8). Fixed by 2990 + 1710 = 4700 (the printed 171 Pralnia depth) and 8550 - 3730 = 4820 (the printed 373 Pokoj 8 depth). Drawn at plan rows 386..390, cols 613..768. Its west 930 mm - between the chimney stack G_W27 and col 613 - is unbuilt and is the door G_O21 from the Hol into Pokoj 8. The centreline is run west to the stack's centreline x 11870 rather than stopping at the drawn masonry x 13290, so the wall graph is closed for polygonisation."
+    },
+    {
+      "id": "G_W23",
+      "level": "ground",
+      "start": [
+        11560,
+        6080
+      ],
+      "end": [
+        11560,
+        8775
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Partition between Salon (6) and Garderoba (9), masonry x 11500..11620. West face at 4500 + 7000 = 11500 from the printed 700; east face at 13330 - 1710 = 11620 from the printed 171. Drawn at plan cols 540..543, unbroken rows 215..339: the Garderoba is NOT entered from the Salon, only from Pokoj (8) through G_O22."
+    },
+    {
+      "id": "G_W24",
+      "level": "ground",
+      "start": [
+        13390,
+        6080
+      ],
+      "end": [
+        13390,
+        8775
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "Partition between Garderoba (9) and Pokoj (8), masonry x 13330..13450. Fixed by 11620 + 1710 = 13330 (printed 171) and 16650 - 3200 = 13450 (printed 320). Drawn at plan cols 614..618, unbroken rows 234..338."
+    },
+    {
+      "id": "G_W25",
+      "level": "ground",
+      "start": [
+        11560,
+        6080
+      ],
+      "end": [
+        13390,
+        6080
+      ],
+      "thickness": 120,
+      "type": "partition",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "thickness"
+      ],
+      "note": "South wall of the Garderoba (9), masonry y 6020..6140. North face at 8550 - 2410 = 6140 from the printed 241. Drawn at plan rows 332..336, cols 570..581; west of col 570 the same line is absorbed into the chimney stack G_W27 (drawn masonry therefore starts at x 12240) and east of col 581 it is the door G_O22. The centreline is run out to G_W23's centreline at x 11560 rather than stopping at the drawn masonry, so the wall graph is closed for polygonisation - the same convention T05 used on the attic partitions."
+    },
+    {
+      "id": "G_W26",
+      "level": "ground",
+      "start": [
+        11625,
+        3340
+      ],
+      "end": [
+        11625,
+        3800
+      ],
+      "thickness": 250,
+      "type": "structural",
+      "source_image": "data/source/plan_ground.png",
+      "derived": true,
+      "note": "Short pier closing the south-east corner of the Salon against the Hol (7). Drawn solid at plan cols 539..551, rows 428..448, i.e. x 11480..11800 by y 3400..3790 (13 px x 21 px, +/-25 mm). Nothing dimensions it, hence fully derived; it is modelled 250 mm thick on the Salon's printed east line x = 11500. Above it - y 3800..4700 - the drawing shows no masonry at all, so the Salon and the Hol are open to each other there; that is why Hol (7) at 2.30 m2 reads larger than the walled rectangle alone."
+    },
+    {
+      "id": "G_W27",
+      "level": "ground",
+      "start": [
+        11870,
+        4700
+      ],
+      "end": [
+        11870,
+        6140
+      ],
+      "thickness": 740,
+      "type": "structural",
+      "source_image": "data/source/plan_ground.png",
+      "derived": true,
+      "note": "Fireplace and chimney stack against the Salon's east wall. Drawn solid black at plan cols 539..569, rows 332..390 = x 11500..12240 by y 4700..6140 (+/-25 mm); the yellow kominek badge is printed ON TOP of the black fill (sampled RGB 251,226,0 over rows 342..358), so the block is continuous masonry, not an outlined recess. Not dimensioned anywhere, hence fully derived. Modelled with its centreline on the LONG (north-south) axis so the block is 1440 mm long by 740 mm thick rather than the other way round - T06's pier/stack sanity band caps thickness at 1200 mm and the transposed form trips it, which is a modelling convention, not a dimensional disagreement. This is the same stack T05 recorded one storey up as A_W9 at x 11560..12240, y 4825..5435 - an independent cross-level confirmation of both transcriptions. `height` omitted: the stack passes through the ceiling and is T11's to terminate."
+    },
+    {
+      "id": "G_W28",
+      "level": "ground",
+      "start": [
+        16155,
+        3105
+      ],
+      "end": [
+        16650,
+        3105
+      ],
+      "thickness": 490,
+      "type": "structural",
+      "source_image": "data/source/plan_ground.png",
+      "derived": true,
+      "note": "Second chimney stack, standing in the north-east corner of the Pralnia (10) against the east wall. Drawn solid at plan cols 730..748, rows 445..465 = x 16155..16650 by y 2860..3350 (+/-25 mm). Fully derived. Corresponds to T05's attic stack A_W10 (x 16000..16875, y 2860..3480), which agrees on the y position to 0 mm; the ground-floor block is the smaller of the two readings and is the one measured here. Netting it off is what brings the Pralnia's polygon down towards its published 4.94 m2."
+    }
+  ],
+  "openings": [
+    {
+      "id": "G_O1",
+      "wall": "G_W7",
+      "offset": 1325,
+      "width": 1800,
+      "height": 2300,
+      "sill": 0,
+      "kind": "window",
+      "swing": "none",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "offset",
+        "sill"
+      ],
+      "note": "East 180/230 on the garden facade, serving Pokoj (8). Callout '180/230' is PRINTED; width and height are transcribed from it. Masonry break at plan cols 632..705 = 1784 mm, so the opening is placed x 13750..15550 and, G_W7 running east-to-west from x 16875, offset = 16875 - 15550. sill 0 is DERIVED: 2300 + any normal 850 sill would exceed the printed 2700 clear height, and data/source/elevation_garden.png shows this facade fully glazed down to the terrace paving. It is a portfenetr, not a sill window."
+    },
+    {
+      "id": "G_O2",
+      "wall": "G_W7",
+      "offset": 6935,
+      "width": 4200,
+      "height": 2300,
+      "sill": 0,
+      "kind": "door",
+      "swing": "none",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "offset",
+        "sill"
+      ],
+      "note": "The main terrace door off the Salon (6), callout '420/230' PRINTED. Masonry break at plan cols 304..475 = 4202 mm; placed x 5740..9940, offset measured from x 16875 westwards. Drawn as a multi-panel sliding unit - no swing arc is printed, so swing is 'none' as a transcribed fact rather than an omission. sill 0 derived as for G_O1."
+    },
+    {
+      "id": "G_O3",
+      "wall": "G_W7",
+      "offset": 13315,
+      "width": 1800,
+      "height": 2300,
+      "sill": 0,
+      "kind": "window",
+      "swing": "none",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "offset",
+        "sill"
+      ],
+      "note": "West 180/230 on the garden facade, serving Pokoj (5). Callout PRINTED. Masonry break at plan cols 141..214 = 1783 mm; placed x 1760..3560. See G_O1 for the sill."
+    },
+    {
+      "id": "G_O4",
+      "wall": "G_W1",
+      "offset": 1165,
+      "width": 2200,
+      "height": 1400,
+      "sill": 900,
+      "kind": "window",
+      "swing": "none",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "offset",
+        "sill"
+      ],
+      "note": "220/140 window to Pokoj (3) in the south facade. Callout PRINTED. Masonry break at plan cols 126..215 = 2174 mm; placed x 1390..3590, offset from G_W1's start node at x 225. sill 900 is DERIVED - no sill is printed - and is the standard Polish window sill; 900 + 1400 = 2300 head, which clears the printed 2700 ceiling."
+    },
+    {
+      "id": "G_O5",
+      "wall": "G_W3",
+      "offset": 585,
+      "width": 1600,
+      "height": 2100,
+      "sill": 0,
+      "kind": "door",
+      "swing": "right",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "offset"
+      ],
+      "note": "Front entrance door in the recessed wall, callout '160/210' PRINTED. Masonry break at plan cols 276..342 = 1612 mm; placed x 5060..6660, offset from G_W3's start node at x 4475. SWING: the leaf and arc are drawn OUTSIDE the wall, in the recess, hinged on the east jamb; G_W3 runs west-to-east so the east jamb is the far one, encoded 'right' under the convention 'looking start->end, left = jamb nearer start'. The physical fact is stated here in words so a different downstream convention is recoverable."
+    },
+    {
+      "id": "G_O6",
+      "wall": "G_W5",
+      "offset": 865,
+      "width": 2200,
+      "height": 1400,
+      "sill": 900,
+      "kind": "window",
+      "swing": "none",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "offset",
+        "sill"
+      ],
+      "note": "220/140 window to the Kuchnia (14). Callout PRINTED. Masonry break at plan cols 398..487 = 2174 mm; placed x 8030..10230, offset from G_W5's start node at x 7165. sill derived, see G_O4."
+    },
+    {
+      "id": "G_O7",
+      "wall": "G_W5",
+      "offset": 4905,
+      "width": 900,
+      "height": 1400,
+      "sill": 900,
+      "kind": "window",
+      "swing": "none",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "offset",
+        "sill"
+      ],
+      "note": "90/140 window to Lazienka (12). Callout PRINTED. Masonry break at plan cols 563..598 = 855 mm; placed x 12070..12970. sill derived, see G_O4."
+    },
+    {
+      "id": "G_O8",
+      "wall": "G_W5",
+      "offset": 7735,
+      "width": 900,
+      "height": 1400,
+      "sill": 900,
+      "kind": "window",
+      "swing": "none",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "offset",
+        "sill"
+      ],
+      "note": "90/140 window to the Kotlownia (11). Callout PRINTED. Masonry break at plan cols 679..715 = 880 mm; placed x 14900..15800. sill derived, see G_O4."
+    },
+    {
+      "id": "G_O9",
+      "wall": "G_W6",
+      "offset": 265,
+      "width": 900,
+      "height": 2300,
+      "sill": 0,
+      "kind": "door",
+      "swing": "left",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "offset",
+        "sill"
+      ],
+      "note": "External door from the Kotlownia (11) to the east terrace, callout '90/230' PRINTED. The only break in the east wall: plan rows 526..562 = 905 mm, placed y 490..1390, offset from G_W6's start node at y 225. SWING: leaf and arc drawn inside the boiler room, hinged on the SOUTH jamb (y = 490) and opening westwards; G_W6 runs south-to-north so the south jamb is nearer the start, encoded 'left'. sill 0 derived (it is a door)."
+    },
+    {
+      "id": "G_O13",
+      "wall": "G_W12",
+      "offset": 150,
+      "width": 900,
+      "height": 2000,
+      "sill": 0,
+      "kind": "door",
+      "swing": "left",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "width",
+        "height",
+        "swing"
+      ],
+      "note": "Door from Hol (2) into Lazienka (4). No stolarka callout is printed for any internal door on this plan. Position IS traced: G_W12 is broken at plan rows 389..424 = 855 mm, i.e. y 3890..4790, offset 150 from the wall's start node at y 3740. Width recorded as the standard 900 the drawing measures to within one pixel; height 2000 assumed. SWING derived: the arc opens eastwards into the Hol and the leaf parks against the wall's south end, so the hinge is the jamb nearer G_W12's start - encoded 'left'. The arc is legible but small at 853 px, so the hinge side is stated as read, not as certain."
+    },
+    {
+      "id": "G_O14",
+      "wall": "G_W13",
+      "offset": 3065,
+      "width": 900,
+      "height": 2000,
+      "sill": 0,
+      "kind": "door",
+      "swing": "left",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "width",
+        "height",
+        "swing"
+      ],
+      "note": "Door from Hol (2) south into Pokoj (3). Traced from the break in G_W13 at plan cols 204..240 = 880 mm, x 3290..4190, offset from the wall's start node at x 225. Width 900 / height 2000 as for G_O13. SWING derived: the arc sweeps south-west into Pokoj 3 from the jamb nearer the wall start; encoded 'left'."
+    },
+    {
+      "id": "G_O15",
+      "wall": "G_W13",
+      "offset": 5165,
+      "width": 900,
+      "height": 2000,
+      "sill": 0,
+      "kind": "door",
+      "swing": "left",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "width",
+        "height",
+        "swing"
+      ],
+      "note": "Door from the Wiatrolap (1) north into the Salon (6) - the only connection out of the vestibule, since G_W10 and G_W11 are both unbroken. Traced from the break in G_W13 at plan cols 290..326 = 881 mm, x 5390..6290. Width/height/swing as for G_O13; hinge read on the jamb nearer the wall start."
+    },
+    {
+      "id": "G_O16",
+      "wall": "G_W14",
+      "offset": 3055,
+      "width": 900,
+      "height": 2000,
+      "sill": 0,
+      "kind": "door",
+      "swing": "left",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "width",
+        "height",
+        "swing"
+      ],
+      "note": "Door from Hol (2) north into Pokoj (5). Traced from the break in G_W14 at plan cols 203..240, x 3280..4180 (930 mm drawn, recorded as the standard 900). Width/height/swing as for G_O13."
+    },
+    {
+      "id": "G_O17",
+      "wall": "G_W15",
+      "offset": 905,
+      "width": 800,
+      "height": 2000,
+      "sill": 0,
+      "kind": "door",
+      "swing": "left",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "width",
+        "height",
+        "swing"
+      ],
+      "note": "Door from the Kuchnia (14) into the Spizarnia (13) - the pantry's only opening. Traced from the break in G_W15 at plan rows 505..537 = 807 mm, y 1130..1930, offset from the wall's start node at y 225. Recorded as 800 rather than 900 because the drawn 807 is a clean one-pixel match to 80 cm. Height and swing derived as for G_O13."
+    },
+    {
+      "id": "G_O18",
+      "wall": "G_W18",
+      "offset": 1300,
+      "width": 900,
+      "height": 2000,
+      "sill": 0,
+      "kind": "door",
+      "swing": "left",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "height",
+        "swing"
+      ],
+      "note": "Door from Hol (7) south into Lazienka (12). Traced from the break in G_W18 at plan cols 552..589 = 904 mm, x 11800..12700, offset from the wall's start node at x 10500. SWING read directly: the leaf is drawn as a vertical double line at plan col 555 standing north of the wall, so the hinge is the WEST jamb (x 11800) and the door opens north into the Hol - the west jamb is nearer G_W18's start, hence 'left'."
+    },
+    {
+      "id": "G_O19",
+      "wall": "G_W20",
+      "offset": 925,
+      "width": 900,
+      "height": 2000,
+      "sill": 0,
+      "kind": "door",
+      "swing": "left",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "height",
+        "swing"
+      ],
+      "note": "Door between the Kotlownia (11) and the Pralnia (10). Traced from the break in G_W20 at plan cols 658..696 = 880 mm, x 14430..15330, offset from the wall's start node at x 13505. Height and hinge side derived as for G_O13."
+    },
+    {
+      "id": "G_O20",
+      "wall": "G_W21",
+      "offset": 720,
+      "width": 900,
+      "height": 2000,
+      "sill": 0,
+      "kind": "door",
+      "swing": "right",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "height",
+        "swing"
+      ],
+      "note": "Door from Hol (7) east into the Pralnia (10). Traced from the break in G_W21 at plan rows 398..434 = 904 mm, y 3650..4550, offset from the wall's start node at y 2930. SWING: the arc opens northwards into the Pralnia from the north jamb, which is the far jamb along G_W21's south-to-north direction, hence 'right'."
+    },
+    {
+      "id": "G_O21",
+      "wall": "G_W22",
+      "offset": 490,
+      "width": 930,
+      "height": 2000,
+      "sill": 0,
+      "kind": "door",
+      "swing": "left",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "height",
+        "swing"
+      ],
+      "note": "Door from Hol (7) north into Pokoj (8). The masonry of G_W22 only starts at plan col 613 (x 13290): west of that the wall line is occupied by the chimney stack G_W27, so the 930 mm gap x 12360..13290 IS the doorway and there is no jamb masonry on its west side. G_W22's centreline is run west into the stack's centreline (x 11870) rather than stopped at the drawn masonry, so the wall graph closes for polygonisation - the T05 convention; hence offset 490 = 12360 - 11870. SWING read directly: the open leaf is drawn as a vertical line at plan col 578 (x 12410) running north from the wall line, i.e. hinged on the WEST jamb and swinging into Pokoj 8; the west jamb is G_W22's start end, hence 'left'."
+    },
+    {
+      "id": "G_O22",
+      "wall": "G_W25",
+      "offset": 950,
+      "width": 780,
+      "height": 2000,
+      "sill": 0,
+      "kind": "door",
+      "swing": "left",
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "width",
+        "height",
+        "swing"
+      ],
+      "note": "Door from Pokoj (8) north into the Garderoba (9) - the dressing room's only opening, since G_W23 and G_W24 are both unbroken. Traced from the break in G_W25 at plan cols 582..613 = 758 mm, x 12510..13290, offset from the wall's start node. G_W25's centreline is run west to G_W23's centreline (x 11560) rather than stopped at the chimney stack's face x 12240, so the wall graph closes for polygonisation; hence offset 950 = 12510 - 11560. Recorded as 780 rather than 800/900 because the drawn 758 sits between them; flagged derived for that reason. Height and hinge side derived as for G_O13."
+    }
+  ],
+  "rooms": [
+    {
+      "id": "G_R1",
+      "published_id": 1,
+      "name": "Wiatrołap",
+      "level": "ground",
+      "boundary": [
+        "G_W3",
+        "G_W10",
+        "G_W11",
+        "G_W13"
+      ],
+      "seed": [
+        5500,
+        2500
+      ],
+      "published_area": 5.35,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "Entrance vestibule, set into the 800 mm south recess. Raw polygon x 4370..6670 by y 1250..3680 = the printed 230 x 243 exactly, 5.589 m2. Less 20 mm per face this is 2.26 x 2.39 = 5.401 m2 against the published 5.35 (+1.0%) - the largest per-face residual of the four small fully-walled rooms on this level, and reported as such: reproducing 5.35 exactly would need about 26 mm per face. Nothing on the plan suggests the room is anything but this rectangle."
+    },
+    {
+      "id": "G_R2",
+      "published_id": 2,
+      "name": "Hol",
+      "level": "ground",
+      "boundary": [
+        "G_W12",
+        "G_W13",
+        "G_W14",
+        "G_W9"
+      ],
+      "seed": [
+        3800,
+        4500
+      ],
+      "published_area": 1.81,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "Small hall distributing to Pokoj (3), Pokoj (5) and Lazienka (4). Raw polygon x 3170..4500 by y 3800..5200 = 1.862 m2. Its EAST side is not walled: G_W9 stops at y 5260 and G_W10 starts at y 3740, so between y 3800 and y 5200 the hall opens straight into the Salon and the x = 4500 boundary is the Salon's printed 700 line, not masonry. Taking the finish allowance only on the three real walls gives 1.31 x 1.36 = 1.782 m2 against the published 1.81 (-1.6%). Names are not unique on this level - see also G_R7, the other 'Hol' - which is why published_id carries the identity. OPEN-PLAN CAVEAT: this room, G_R6, G_R7 and G_R14 share one polygonised face because the walls between them genuinely do not exist; see G_R6's note for the aggregate check that stands in for the four individual ones."
+    },
+    {
+      "id": "G_R3",
+      "published_id": 3,
+      "name": "Pokój",
+      "level": "ground",
+      "boundary": [
+        "G_W1",
+        "G_W8",
+        "G_W13",
+        "G_W10"
+      ],
+      "seed": [
+        2000,
+        2000
+      ],
+      "published_area": 11.99,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "South-west bedroom. Raw polygon x 450..4250 by y 450..3680 = the printed 380 x 323, 12.274 m2; less 20 mm per face, 3.76 x 3.19 = 11.9944 m2 against the published 11.99 (+0.04%). This is one of the two rooms T07 already used to confirm the finish allowance. Genuinely identical in area to G_R5 - not a transcription duplicate."
+    },
+    {
+      "id": "G_R4",
+      "published_id": 4,
+      "name": "Łazienka",
+      "level": "ground",
+      "boundary": [
+        "G_W8",
+        "G_W13",
+        "G_W14",
+        "G_W12"
+      ],
+      "seed": [
+        1700,
+        4500
+      ],
+      "published_area": 3.48,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "West bathroom. Raw polygon x 450..3050 by y 3800..5200 = the printed 260 x 140, 3.64 m2; less 20 mm per face, 2.56 x 1.36 = 3.4816 m2 against the published 3.48 (+0.05%). The second of T07's two allowance samples."
+    },
+    {
+      "id": "G_R5",
+      "published_id": 5,
+      "name": "Pokój",
+      "level": "ground",
+      "boundary": [
+        "G_W8",
+        "G_W14",
+        "G_W7",
+        "G_W9"
+      ],
+      "seed": [
+        2000,
+        7000
+      ],
+      "published_area": 11.99,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "North-west bedroom. Raw polygon x 450..4250 by y 5320..8550 = the printed 380 x 323, identical to G_R3, so 11.9944 m2 finished against the published 11.99. Its north wall carries the 180/230 garden glazing G_O3."
+    },
+    {
+      "id": "G_R6",
+      "published_id": 6,
+      "name": "Salon + Jadalnia",
+      "level": "ground",
+      "boundary": [
+        "G_W9",
+        "G_W7",
+        "G_W23",
+        "G_W13",
+        "G_W26"
+      ],
+      "seed": [
+        8000,
+        6000
+      ],
+      "published_area": 30.57,
+      "floor_area_m2": 33.2,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "Open-plan living/dining with the staircase. Main polygon x 4500..11500 by y 3800..8550 = the printed 700 x 475 = 33.25 m2 raw, plus the unwalled 1060 x 400 pocket x 10440..11500 by y 3400..3800 that no printed dimension assigns to any other room, 0.42 m2 - total 33.67 m2 raw. Only its north, part of its east and part of its west edge are actually walled, so the finish allowance applies to well under half the perimeter and the published FLOOR area 33.2 m2 is the figure to test against, not the usable one. THE TWO PUBLISHED FIGURES DIFFER BY 2.63 m2 AND THIS IS THE ONLY GROUND-FLOOR ROOM WHERE THEY DO: 33.2 - 30.57 = 2.63 = 118.81 - 116.18, the whole level's floor/usable gap. That 2.63 m2 is the ground-floor stair run, which powierzchnia uzytkowa 'bez schodow' excludes. T08/T09 must deduct it here and nowhere else. Note it is NOT the attic's Schody 3.64 m2 - different quantity, different storey. OPEN-PLAN CAVEAT: G_R2, G_R6, G_R7 and G_R14 are one continuous space and T07's polygonisation correctly returns ONE face for all four - 49.679 m2 raw - so their four `seed` points cannot separate them and T08 must not test them individually. The aggregate does check out: the four published FLOOR areas sum to 1.81 + 33.2 + 2.30 + 12.04 = 49.35 m2 against that 49.679 m2 raw face, +0.7%. The internal split between them is the publisher's own measuring lines (x 4500, y 3800, x 11500), each of which is a printed dimension line here even though none of them is masonry."
+    },
+    {
+      "id": "G_R7",
+      "published_id": 7,
+      "name": "Hol",
+      "level": "ground",
+      "boundary": [
+        "G_W18",
+        "G_W26",
+        "G_W21",
+        "G_W22",
+        "G_W27"
+      ],
+      "seed": [
+        12800,
+        4000
+      ],
+      "published_area": 2.3,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "Corridor serving Lazienka (12), Pralnia (10) and Pokoj (8) off the Salon. Raw polygon x 11500..13420 by y 3400..4700 = 2.496 m2. Depth 130 cm is DERIVED, not printed - it is the residual of the y chain G_C9, 45+283+12+130+12+373+45 = 900, and the drawn clear span rows 391..443 measures 1272 mm against it. Its west side is open to the Salon above the pier G_W26, so the finish allowance applies to three sides only: 1.88 x 1.26 = 2.369 m2 against the published 2.30 (+3.0%). Taking the west edge at the pier face x 11730 instead gives 2.08 m2 (-9.6%), so the printed-line reading is the better of the two and is the one recorded. OPEN-PLAN CAVEAT: see G_R6."
+    },
+    {
+      "id": "G_R8",
+      "published_id": 8,
+      "name": "Pokój",
+      "level": "ground",
+      "boundary": [
+        "G_W22",
+        "G_W6",
+        "G_W7",
+        "G_W24",
+        "G_W25",
+        "G_W27"
+      ],
+      "seed": [
+        15000,
+        7000
+      ],
+      "published_area": 13.05,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "North-east bedroom - L-SHAPED, and that is why its published 13.05 m2 exceeds the 3.20 x 3.73 = 11.94 m2 that its two printed dimensions alone would give. The printed 320 and 373 describe only the north leg, x 13450..16650 by y 6140..8550; the room also takes the full-width band x 12240..16650 by y 4820..6140 that runs west under the Garderoba as far as the chimney stack G_W27. Raw polygon (12240,4820)-(16650,4820)-(16650,8550)-(13450,8550)-(13450,6140)-(12240,6140). T07's kernel polygonises this file's wall network to 13.388 m2 raw and 13.064 m2 at the 20 mm allowance, against the published 13.05 - +0.1%, which is the single strongest confirmation on this level that the L-shaped reading is right; the bounding rectangle alone would be 8% short. A `seed` is supplied because the boundary centroid of an L can fall outside it."
+    },
+    {
+      "id": "G_R9",
+      "published_id": 9,
+      "name": "Garderoba",
+      "level": "ground",
+      "boundary": [
+        "G_W23",
+        "G_W24",
+        "G_W7",
+        "G_W25"
+      ],
+      "seed": [
+        12400,
+        7300
+      ],
+      "published_area": 3.96,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "Walk-in wardrobe off Pokoj (8). Raw polygon x 11620..13330 by y 6140..8550 = the printed 171 x 241, 4.121 m2; less 20 mm per face, 1.67 x 2.37 = 3.958 m2 against the published 3.96 (-0.06%). Entered only through G_O22 - both its side walls are unbroken."
+    },
+    {
+      "id": "G_R10",
+      "published_id": 10,
+      "name": "Pralnia",
+      "level": "ground",
+      "boundary": [
+        "G_W21",
+        "G_W20",
+        "G_W22",
+        "G_W6",
+        "G_W28"
+      ],
+      "seed": [
+        14500,
+        4200
+      ],
+      "published_area": 4.94,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "Utility room. Raw envelope x 13540..16650 by y 2990..4700 = the printed 311 x 171, 5.318 m2, LESS the chimney stack G_W28 which occupies x 16155..16650 by y 2990..3350 in the room's south-east corner, 0.178 m2 - so 5.140 m2 raw. T07's kernel polygonises it to 5.140 m2 raw and 4.956 m2 at the 20 mm allowance, against the published 4.94 (+0.3%). Without netting off the stack the room over-reads by 3.6%, so the stack is load-bearing for this check, exactly as T05 found for the attic's Strych ocieplony (3). The printed 311 here and the printed 306 for the Kotlownia directly below span the same bay and differ by exactly the 50 mm step in the dividing wall (G_W21 at 120 mm, G_W19 at 170 mm)."
+    },
+    {
+      "id": "G_R11",
+      "published_id": 11,
+      "name": "Kotłownia",
+      "level": "ground",
+      "boundary": [
+        "G_W5",
+        "G_W19",
+        "G_W20",
+        "G_W6"
+      ],
+      "seed": [
+        15000,
+        1600
+      ],
+      "published_area": 7.31,
+      "area_groups": [
+        "usable",
+        "boiler"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "Boiler room, with its own external door G_O9. Raw polygon x 13590..16650 by y 450..2870 = the printed 306 x 242, 7.405 m2; less 20 mm per face, 3.02 x 2.38 = 7.188 m2 against the published 7.31 (-1.7%). REPORTED AS A RESIDUAL, not smoothed: 7.31 would need only ~9 mm per face, or a width of 311 rather than the 306 printed against this room. The 311 belongs to the Pralnia one bay north (G_R10) and the two are separated by the 50 mm wall step; adopting 311 here would break the lower x chain G_C3. area_groups ['usable','boiler']: the Kotlownia is inside powierzchnia uzytkowa 163.57 and is the room published separately as 7.31; it is NOT in powierzchnia netto 127.02."
+    },
+    {
+      "id": "G_R12",
+      "published_id": 12,
+      "name": "Łazienka",
+      "level": "ground",
+      "boundary": [
+        "G_W5",
+        "G_W15",
+        "G_W16",
+        "G_W17",
+        "G_W18",
+        "G_W19"
+      ],
+      "seed": [
+        12500,
+        1500
+      ],
+      "published_area": 5.85,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "Main bathroom - L-SHAPED, wrapping north over the Spizarnia, which is why its published 5.85 m2 exceeds the 1.83 x 2.83 = 5.18 m2 of its two printed dimensions. Raw polygon (11590,450)-(13420,450)-(13420,3280)-(10560,3280)-(10560,2370)-(11590,2370) = 6.116 m2: the printed 183 x 283 south leg plus the 1030 x 910 north-west return between the Spizarnia's north wall G_W17 and the bathroom's north wall G_W18. T07's kernel polygonises it to 6.023 m2 raw and 5.776 m2 at the 20 mm allowance, against the published 5.85 (-1.3%); the bounding rectangle alone would be 11% short. A `seed` is supplied for the L."
+    },
+    {
+      "id": "G_R13",
+      "published_id": 13,
+      "name": "Spiżarnia",
+      "level": "ground",
+      "boundary": [
+        "G_W5",
+        "G_W15",
+        "G_W16",
+        "G_W17"
+      ],
+      "seed": [
+        11000,
+        1300
+      ],
+      "published_area": 1.54,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "Pantry off the kitchen. Raw polygon x 10560..11470 by y 450..2260 = the printed 91 x 181, 1.647 m2; less 20 mm per face, 0.87 x 1.77 = 1.5399 m2 against the published 1.54 (-0.01%) - the closest match of all 14 rooms and a third independent confirmation of the 20 mm allowance."
+    },
+    {
+      "id": "G_R14",
+      "published_id": 14,
+      "name": "Kuchnia",
+      "level": "ground",
+      "boundary": [
+        "G_W5",
+        "G_W11",
+        "G_W15",
+        "G_W13"
+      ],
+      "seed": [
+        8600,
+        2000
+      ],
+      "published_area": 12.04,
+      "area_groups": [
+        "usable",
+        "net"
+      ],
+      "source_image": "data/source/plan_ground_areas.png",
+      "note": "Kitchen, open northwards to the Salon. Raw polygon x 6790..10440 by y 450..3800 = the printed 365 x 335, 12.228 m2. Its north edge y = 3800 is a VIRTUAL line, not masonry - G_W13 stops at x 6730 - so the finish allowance applies on three sides only: 3.61 x 3.33 = 12.021 m2 against the published 12.04 (-0.16%). That the virtual edge is exactly where the printed 335 and the Salon's printed 475 meet (45 + 335 + 475 + 45 = 900, chain G_C7) is the evidence that the publisher split the open plan on this line. OPEN-PLAN CAVEAT: see G_R6 - polygonisation returns one merged face for this room, G_R2, G_R6 and G_R7."
+    }
+  ],
+  "dimension_chains": [
+    {
+      "id": "G_C1",
+      "level": "ground",
+      "axis": "x",
+      "extent": "overall_x",
+      "segments_cm": [
+        470,
+        224,
+        1016
+      ],
+      "total_cm": 1710,
+      "source_image": "data/source/plan_ground.png",
+      "note": "The building's printed overall length chain, read verbatim off the bottom margin of plan_ground.png: three segments 470 / 224 / 1016 above a separately printed 1710. Every value here is a printed digit; nothing is computed. The two internal ticks are not arbitrary - 470 lands on the west reveal of the entrance recess (plan col 261.4) and 470+224 = 694 on its east reveal (col 353.1), so this chain is what dimensions the recess. Independently corroborated by site.png, which prints 400 | 1710 | 400 = 2510, and by data/published.json's min plot 25.1 m."
+    },
+    {
+      "id": "G_C2",
+      "level": "ground",
+      "axis": "x",
+      "extent": "overall_x",
+      "segments_cm": [
+        45,
+        380,
+        25,
+        700,
+        12,
+        171,
+        12,
+        320,
+        45
+      ],
+      "total_cm": 1710,
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "segments_cm",
+        "total_cm"
+      ],
+      "note": "Full west-to-east decomposition across the NORTHERN half of the plan: exterior wall | Pokoj 5 | wall | Salon | partition | Garderoba | partition | Pokoj 8 | exterior wall. 380, 700, 171 and 320 are all PRINTED room widths on plan_ground.png. 45 is the exterior wall (from the printed 810 attic interior inside the printed 900 overall) and 25 / 12 / 12 are the internal walls, derived as the residual 1710 - 45 - 380 - 700 - 171 - 320 - 45 = 49 split by what the drawing renders: 10 px for the stair wall G_W9 and 5 px each for the two partitions. The total 1710 is printed on this same image but as chain G_C1's total, hence marked derived here. The closure is a real test: it pins three unprinted wall thicknesses simultaneously and it is what proves the exterior wall is 450 and not 465 - at 465 the residual would be 46 cm and no sane pair of partitions fits."
+    },
+    {
+      "id": "G_C3",
+      "level": "ground",
+      "axis": "x",
+      "extent": "overall_x",
+      "segments_cm": [
+        45,
+        380,
+        12,
+        230,
+        12,
+        365,
+        12,
+        91,
+        12,
+        183,
+        17,
+        306,
+        45
+      ],
+      "total_cm": 1710,
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "segments_cm",
+        "total_cm"
+      ],
+      "note": "Full west-to-east decomposition across the SOUTHERN half: exterior | Pokoj 3 | partition | Wiatrolap | partition | Kuchnia | partition | Spizarnia | partition | Lazienka 12 | wall | Kotlownia | exterior. SIX printed room widths on one line - 380, 230, 365, 91, 183, 306 - leaving 1710 - 1645 = 65 cm for five internal walls. Four of them render 5 px (12 cm) and the fifth, G_W19 between the Lazienka and the Kotlownia, renders 7 px; 4 x 12 + 17 = 65 exactly. That is the whole basis for the single 170 mm wall on this level and it is why this chain is worth transcribing even though it duplicates G_C1's span. 17 cm is unusual and is reported."
+    },
+    {
+      "id": "G_C4",
+      "level": "ground",
+      "axis": "y",
+      "extent": "overall_y",
+      "segments_cm": [
+        820,
+        80
+      ],
+      "total_cm": 900,
+      "source_image": "data/source/plan_ground.png",
+      "note": "The building's printed overall depth chain, read verbatim off the left margin of plan_ground.png: an inner run 820 + 80 against a separately printed outer 900. All three numbers are printed digits. The 80 tick sits at plan row 550.0, which is the SOUTH FACE OF THE RECESSED ENTRANCE WALL G_W3 (y 807 by conversion) - the chain is dimensioning the depth of the entrance recess, not a feature of the west elevation. Reading it any other way leaves the 80 unexplained."
+    },
+    {
+      "id": "G_C5",
+      "level": "ground",
+      "axis": "y",
+      "extent": "overall_y",
+      "segments_cm": [
+        45,
+        323,
+        12,
+        140,
+        12,
+        323,
+        45
+      ],
+      "total_cm": 900,
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "segments_cm"
+      ],
+      "note": "South-to-north decomposition down the WEST bay: exterior | Pokoj 3 | partition | Lazienka 4 | partition | Pokoj 5 | exterior. 323, 140 and 323 are PRINTED; 45 and 12 are derived as in G_C2. The 900 total IS printed (chain G_C4), so closure is a genuine test and it passes exactly: 45+323+12+140+12+323+45 = 900. Pixel check - the two partitions land at plan rows 428..432 and 365..370 against the 432.5 and 365.5 this chain predicts."
+    },
+    {
+      "id": "G_C6",
+      "level": "ground",
+      "axis": "y",
+      "extent": "overall_y",
+      "segments_cm": [
+        80,
+        45,
+        243,
+        12,
+        475,
+        45
+      ],
+      "total_cm": 900,
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "segments_cm"
+      ],
+      "note": "South-to-north decomposition down the ENTRANCE bay: the 80 recess | the recessed wall | Wiatrolap | partition | Salon | exterior wall. 80 is PRINTED (left margin, chain G_C4) and 243 and 475 are PRINTED room depths; 45 and 12 are derived. This is the chain that ties the recess into the building: it closes at 900 only if the recessed wall is a full 450 mm exterior wall set 800 mm back, and 45+243+12+475+45 = 820 reproduces the OTHER printed number on the left margin as a by-product. Two printed figures explained by one geometry."
+    },
+    {
+      "id": "G_C7",
+      "level": "ground",
+      "axis": "y",
+      "extent": "overall_y",
+      "segments_cm": [
+        45,
+        335,
+        475,
+        45
+      ],
+      "total_cm": 900,
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "segments_cm"
+      ],
+      "note": "South-to-north decomposition down the KITCHEN bay: exterior | Kuchnia | Salon | exterior. Both 335 and 475 are PRINTED, and there is NO wall between them - the kitchen and the living room are one open volume and the boundary at y 3800 is the publisher's own measuring line. That 45 + 335 + 475 + 45 = 900 with nothing left over is the evidence for where that line is; it is also why this chain has only four segments where the others have six or seven. 45 is derived."
+    },
+    {
+      "id": "G_C8",
+      "level": "ground",
+      "axis": "y",
+      "extent": "overall_y",
+      "segments_cm": [
+        45,
+        242,
+        12,
+        171,
+        12,
+        373,
+        45
+      ],
+      "total_cm": 900,
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "segments_cm"
+      ],
+      "note": "South-to-north decomposition down the EAST bay: exterior | Kotlownia | partition | Pralnia | partition | Pokoj 8 | exterior. 242, 171 and 373 are PRINTED; 45 and 12 derived. Closure at 900 places the two horizontal partitions at y 2870..2990 and 4700..4820, against drawn rows 460..465 and 386..390 - a match of under half a pixel on both."
+    },
+    {
+      "id": "G_C9",
+      "level": "ground",
+      "axis": "y",
+      "extent": "overall_y",
+      "segments_cm": [
+        45,
+        283,
+        12,
+        130,
+        12,
+        373,
+        45
+      ],
+      "total_cm": 900,
+      "source_image": "data/source/plan_ground.png",
+      "derived_fields": [
+        "segments_cm"
+      ],
+      "note": "South-to-north decomposition down the BATHROOM/HALL bay: exterior | Lazienka 12 | partition | Hol 7 | partition | Pokoj 8 | exterior. 283 and 373 are PRINTED. 130 is NOT printed anywhere - Hol (7) carries no dimension on the plan - and is derived purely as this chain's residual, 900 - 45 - 283 - 12 - 12 - 373 - 45 = 130; the drawn clear span, plan rows 391..443, measures 1272 mm against it (-2%, i.e. within the wall-edge ambiguity). It is the only room dimension on this level that comes from chain closure alone, and it is flagged here so T15 can revisit it if Hol (7)'s area check misbehaves."
+    }
+  ]
+}

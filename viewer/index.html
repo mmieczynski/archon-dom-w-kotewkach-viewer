@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dom w Kotewkach 6 (E) — verified 3D reconstruction</title>
+<link rel="stylesheet" href="./style.css" />
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/three.module.js",
+    "three/addons/": "./vendor/three/addons/"
+  }
+}
+</script>
+</head>
+<body>
+
+<canvas id="stage"></canvas>
+
+<div id="crosshair" hidden>+</div>
+
+<div id="boot">
+  <div class="boot-card">
+    <h1>Dom w Kotewkach 6 (E)</h1>
+    <p id="boot-status">Loading build/model.glb …</p>
+    <div class="boot-bar"><div id="boot-bar-fill"></div></div>
+    <pre id="boot-error" hidden></pre>
+  </div>
+</div>
+
+<aside id="sidebar">
+  <header>
+    <h1>Dom w Kotewkach 6&nbsp;(E)</h1>
+    <p class="sub">Generated from <code>spec/</code>. Nothing here is hand-modelled.</p>
+  </header>
+
+  <details open id="panel-view">
+    <summary>View</summary>
+    <div class="body">
+      <div class="row segmented" id="mode-buttons">
+        <button data-mode="orbit" class="on">Orbit</button>
+        <button data-mode="walk">Walk</button>
+      </div>
+      <div class="row segmented" id="view-buttons">
+        <button data-view="iso">Iso</button>
+        <button data-view="top">Top</button>
+        <button data-view="south">S</button>
+        <button data-view="north">N</button>
+        <button data-view="east">E</button>
+        <button data-view="west">W</button>
+      </div>
+      <label class="check"><input type="checkbox" id="opt-ortho" /> Orthographic (true plan / elevation)</label>
+      <label class="check"><input type="checkbox" id="opt-ground" checked /> Reference ground plane &amp; 1&nbsp;m grid</label>
+      <label class="check"><input type="checkbox" id="opt-shadows" checked /> Shadows</label>
+      <label class="check"><input type="checkbox" id="opt-edges" /> Edge outlines</label>
+      <p class="hint" id="walk-hint" hidden>
+        Click the view to capture the mouse. <b>W A S D</b> move · <b>Shift</b> run ·
+        <b>1</b>/<b>2</b> ground/attic · <b>Esc</b> release.
+      </p>
+      <div class="row" id="walk-level-row" hidden>
+        <span class="lbl">Standing on</span>
+        <div class="segmented" id="level-buttons">
+          <button data-level="ground" class="on">Ground&nbsp;±0.00</button>
+          <button data-level="attic">Attic&nbsp;+3.04</button>
+        </div>
+      </div>
+      <label class="check" id="walk-collide-row" hidden><input type="checkbox" id="opt-collide" checked /> Collision against visible walls</label>
+    </div>
+  </details>
+
+  <details open id="panel-layers">
+    <summary>Layers</summary>
+    <div class="body">
+      <div class="row">
+        <span class="lbl">Isolate level</span>
+        <div class="segmented" id="isolate-buttons">
+          <button data-isolate="all" class="on">All</button>
+          <button data-isolate="ground">Ground</button>
+          <button data-isolate="attic">Attic</button>
+        </div>
+      </div>
+      <div class="row wrap" id="preset-buttons">
+        <button data-preset="everything">Everything</button>
+        <button data-preset="roof-off">Roof off</button>
+        <button data-preset="ground-plan">Ground plan</button>
+        <button data-preset="attic-plan">Attic plan</button>
+        <button data-preset="shell">Shell only</button>
+        <button data-preset="structure">Structure only</button>
+      </div>
+      <div id="layer-groups"></div>
+      <div class="note">
+        Toggles match on the <b>node-name prefix</b> (<code>level / category / id [/ layer]</code>).
+        Two shapes break the pattern on purpose — <code>attic/openings/windows/A_O2</code> has a
+        sub-category where a layer would be, and <code>roof/slab</code> has only two fields — so
+        prefixes are used, never <code>split("/")[3]</code>.
+      </div>
+    </div>
+  </details>
+
+  <details id="panel-measure">
+    <summary>Measure</summary>
+    <div class="body">
+      <label class="check"><input type="checkbox" id="opt-measure" /> Measuring mode <span class="key">M</span></label>
+      <label class="check"><input type="checkbox" id="opt-snap" checked /> Snap to nearest corner (≤&nbsp;0.20&nbsp;m)</label>
+      <p class="hint">Click two points on the geometry. Distances are in metres, straight off the
+        model — 1&nbsp;glTF unit = 1&nbsp;m, and the viewer applies no scale anywhere.</p>
+      <div id="measure-list" class="readout"></div>
+      <div class="row"><button id="measure-clear">Clear measurements</button></div>
+    </div>
+  </details>
+
+  <details id="panel-inspect">
+    <summary>Inspector</summary>
+    <div class="body">
+      <p class="hint">Click any part in orbit mode to read the node name and the metadata the
+        generator wrote into the GLB.</p>
+      <div id="inspect-out" class="readout">Nothing selected.</div>
+    </div>
+  </details>
+
+  <details id="panel-quantities">
+    <summary>Quantities — computed vs published</summary>
+    <div class="body" id="quantities-out">Loading build/quantities.json …</div>
+  </details>
+
+  <footer>
+    <span id="artifact-line">—</span>
+  </footer>
+</aside>
+
+<button id="sidebar-toggle" title="Show/hide panel">☰</button>
+
+<div id="hud">
+  <span id="hud-mode">Orbit</span>
+  <span id="hud-room"></span>
+  <span id="hud-pos"></span>
+  <span id="hud-fps"></span>
+</div>
+
+<div id="labels"></div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
